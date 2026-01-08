@@ -1,0 +1,309 @@
+---
+title: "Red List Index of ecosystems assessments"
+subtitle: "Technical workflow"
+
+date: last-modified
+date-format: DD-MM-YYYY
+---
+
+```{r setup}
+#| echo: false
+#| message: false
+#| warning: false
+
+#if (!requireNamespace(c("magrittr","dplyr", "ggplot2", "ggthemes"), quietly = TRUE)) {
+#  install.packages(c("magrittr","dplyr", "ggplot2", "ggthemes"))
+#}
+
+#devtools::install_github("SANBI-NBA/nbaR", force = T)
+
+library(nbaR)
+library(dplyr)
+library(tidyr)
+library(stringi)
+library(rlang)
+library(gt)
+library(ggplot2)
+library(RColorBrewer)
+#library(scales)
+#library(openxlsx)
+```
+
+## Data Integration and Preparation
+
+Here, we integrated data from the Ecosystem Description Database (EDD) with multiple Red List of Ecosystems (RLE) assessments to analyze temporal changes in ecosystem conservation status. The EDD dataset was filtered to include only terrestrial ecosystems recognized in the 2024 National Vegetation Map with valid 2024/5 RLE status. We extracted ecosystem classification variables (realm, code, type, bioregion, and biome) and IUCN Global Ecosystem Typology classifications (2022 Level 3 and 2025 Level 2), then joined these with the RLE assessments from 2014, 2018, 2020, and 2024. This integration enabled temporal analysis of threat status changes over the past decade, providing a comprehensive view of ecosystem classification, current conservation status, and historical trends for South African terrestrial ecosystems.
+
+```{r}
+
+EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
+       filter(VT.Present.NVM.2024  %in% "TRUE",
+              Realm_GETL1 %in% c("Terrestrial", "Terrestrial/Freshwater"),
+              RLE_2025 != "#N/A") %>%
+       select(Realm_GETL1, 
+              Code, 
+              EcosystemType_GETLevel5_6, 
+              BioregionGETL4_Biogeographic_ecotypes, 
+              Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.,
+              IUCN_GET_2022_L3,
+              IUCN_GET_2025_L2)
+    
+RLE <- readxl::read_excel("./data/multiple RLE assessments.xlsx") %>%
+       select("MapCode",
+              "Year.2014",
+              "RLE2014.adjusted",
+              "Year.2018",
+              "RLE2018.adjusted",
+              "Year.2020",
+              "RLE2020.adjusted",
+              "year.2024",
+              "RLE 2024 adjusted")
+
+data <- EDD %>%
+        left_join(RLE, by = c("Code" = "MapCode"))
+```
+
+# RLIe computation workflow
+
+To compute the Red List Index of Ecosystems (RLIe), three modular functions were developed to simplify, standardise, and extend the computation across groupings.
+
+*Function Roles:*
+
+-   *calcWeights()* - a helper function that assigns numeric weights to IUCN Red List of Ecosystems (RLE) categories.
+-   *bootstrap_rlie()* - a statistical helper function that estimates uncertainty around the RLIe by generating bootstrap confidence intervals.
+-   *calcRLIE()* - A wrapper function that integrates weighting, index calculation, and bootstrapping, while allowing flexible grouping, e.g can calculate RLIE for the entire dataset (no groups) or by groups (functional groups & year)
+
+Together, these functions allow RLIe to be calculated consistently for the full dataset (ungrouped) or disaggregated by one or more grouping variables (e.g. functional groups and assessment year).
+
+## Step 1: Define function to assign weights to RLE categories
+
+*The calcWeights() function takes two arguments*:
+
+-   *data*: a data frame containing ecosystem assessment information
+-   *RLE_criteria*: the name of the column containing RLE category codes (e.g. LC, NT, VU, EN, CR, CO).
+
+This function also removes rows with missing RLE values and assigns numeric weights (0-5) to rank risk categories, with higher values indicating greater threat.
+
+```{r}
+
+calcWeights <- function(data, RLE_criteria) {
+  data <- filter(data, !is.na(data[[RLE_criteria]]))
+  
+  data <- mutate(data, category_weights = dplyr::case_match(.x = .data[[RLE_criteria]],
+                                         "CO" ~ 5,   
+                                         "CR" ~ 4,   
+                                         "EN" ~ 3,   
+                                         "VU" ~ 2,   
+                                         "NT" ~ 1,   
+                                         "LC" ~ 0, 
+                                         .default = NA_real_))
+  return(data)
+}
+
+```
+
+## Step 2: Define bootstrap function for confidence intervals
+
+Uncertainty in RLIe values is quantified using non-parametric bootstrap resampling (i.e. no assumption being made about the shape of the data distribution as inputs are ordinal category weights, not continuous measurements & group sizes differ across GET levels).
+
+*The bootstrap_rlie() function:*
+
+-   Takes a vector of category weights (0–5)
+-   Randomly resamples the weights with replacement
+-   Recalculates the RLIe score for each resample
+-   Repeats this process 5,000 times
+-   Extracts the 2.5th and 97.5th percentiles of the bootstrap distribution
+
+These percentiles define a 95% confidence interval around the RLIe estimate, representing the range within which the true index value is likely to lie.
+
+*Calculation of the index*
+
+These ordinal ranks are used to calculate the Red List Index for Ecosystems (RLIE) and the RLIE ranges from zero (all ecosystems Collapsed) to one (all Least Concern).
+
+:::: column-margin
+::: {#eq-rlie .equation}
+$$
+RLIE_t = 1- \frac{\sum_{i = 1}^{n} W_{C_{i,j}}}{W_{{CO}^n}}
+$$
+:::
+
+Where $W_{C_{i,j}}$ represents the risk category rank for ecosystem $i$ in year $t$, with the following values:
+
+-   Collapsed = 5
+-   Critically Endangered = 4
+-   Endangered = 3
+-   Vulnerable = 2
+-   Near Threatened = 1
+-   Least Concern = 0
+::::
+
+```{r}
+
+bootstrap_rlie <- function(weights, n_boot = 5000) { # vector of ecosystem weights (0-5) & bootstrap iterations (default= 1000)
+   boot_scores <- replicate(n_boot, {
+       sampled <- sample(weights, size = length(weights), replace = TRUE) # randomly picks weights with replacement
+    1 - (sum(sampled, na.rm = TRUE) / (length(sampled) * 5)) # calculates the RLIe score
+  })
+  quantile(boot_scores, probs = c(0.025, 0.975), na.rm = TRUE)
+}
+
+```
+
+## Step 3: Define main RLIE calculation function
+
+The calcRLIE() function calculates the Red List Index of Ecosystems (RLIe) for a dataset, either at the national level or grouped by one or more categorical variables (e.g., GET Level, year). It integrates two helper functions:
+
+-   *calcWeights()* – converts RLE categories (LC → CO) into numeric weights (0–5)
+-   *bootstrap_rlie()* – performs non-parametric bootstrap resampling to generate confidence intervals
+
+The function starts off by cleaning the data - removing unevaluated ecosystems, converts risk categories into numeric weights, and calculates RLIe scores either for the entire dataset or by groups (like GET levels and year). To account for uncertainty, it performs 5,000 bootstrap simulations to generate 95% confidence intervals around each score. The output is a table showing RLIe values with their confidence bounds.
+
+
+```{r}
+
+calcRLIE <- function(data, RLE_criteria, group1 = NULL, group2 = NULL, n_boot = 5000) {
+  
+  # ---- DATA CLEANING ----
+  # Remove ecosystems that are Not Evaluated (NE) or Data Deficient (DD)
+  data <- dplyr::filter(data, !.data[[RLE_criteria]] %in% c("NE", "DD"))
+  
+  # ---- WEIGHT ASSIGNMENT ----
+  # Call calcWeights() to convert RLE categories into numeric weights & drop NA rows
+  data <- calcWeights(data, RLE_criteria)
+  data <- tidyr::drop_na(data, category_weights)
+  
+  # ---- HANDLE MISSING VALUES IN GROUPING VARIABLES ----
+  # Drops rows with missing grouping variables (if provided) to ensure all groups are complete
+  if (!is.null(group1)) {
+    data <- tidyr::drop_na(data, !!rlang::sym(group1))
+  }
+  
+  if (!is.null(group2)) {
+    data <- tidyr::drop_na(data, !!rlang::sym(group2))
+  }
+  
+  # ---- GROUP THE DATA ----
+  # If one or two grouping variables are supplied, data is grouped accordingly.
+  # If no grouping variables are provided, a dummy group "all" is created so the workflow still works uniformly.
+  grouped <- if (!is.null(group1) && !is.null(group2)) {
+    dplyr::group_by(data, group1 = .data[[group1]], group2 = .data[[group2]])
+    
+  } else if (!is.null(group1)) {
+    dplyr::group_by(data, group1 = .data[[group1]])
+    
+  } else if (!is.null(group2)) {
+    dplyr::group_by(data, group2 = .data[[group2]])
+    
+  } else {
+
+    dplyr::mutate(data, dummy_group = "all") %>% dplyr::group_by(dummy_group)
+  }
+  
+  # ---- CALCULATE RLIE SCORES ----
+  result <- summarise(grouped,
+                      total_weight = sum(category_weights, na.rm = TRUE),
+                      total_count = dplyr::n(),
+                      RLIE = 1 - (total_weight / (total_count * 5)),
+                      weights_list = list(category_weights), .groups = "drop") #store the individual weights as a list for bootstrap calculations
+
+
+  # ---- BOOTSTRAP CONFIDENCE INTERVALS ----
+  # purrr::map() applies bootstrap_rlie() to each group's ecosystem weights in weights_list.
+  # For each group, bootstrap_rlie() takes the weights (.x), resamples them with replacement,
+  # recalculates the RLIe for each resample, and returns the 95% CI.
+  bounds <- purrr::map(result$weights_list, ~ bootstrap_rlie(.x, n_boot = n_boot))
+  bounds_df <- do.call(rbind, bounds)
+  
+  # Add lower an and upper confidence bounds 
+  result$lower <- bounds_df[, 1]
+  result$upper <- bounds_df[, 2]
+  
+  # ---- FINAL CLEANUP ----
+  # Add a column showing which RLE criteria column was analyzed
+  # Remove the weights_list column (no longer needed, keeps output clean)
+  result$criteria <- RLE_criteria
+  result$weights_list <- NULL
+  return(result)
+  
+}
+
+```
+
+## Step 4: Reshape data from wide to long format
+
+This code reshapes your ecosystem data from wide to long format, converting it from one row per ecosystem (with separate columns for each year's assessment) to four rows per ecosystem (one per year). It consolidates all year-specific RLE assessments into a single Overall column, simplifies long column names, keeps only essential columns, and filters out missing data.
+
+```{r}
+
+combined_data <- data %>%
+                 pivot_longer(cols = c(Year.2014, Year.2018, Year.2020, year.2024),
+                                       names_to = "Year_col",
+                                       values_to = "Year") %>%
+                 mutate(Year = as.numeric(Year),
+                        Overall = case_when(Year == 2014 ~ RLE2014.adjusted,
+                                            Year == 2018 ~ RLE2018.adjusted,
+                                            Year == 2020 ~ RLE2020.adjusted,
+                                            Year == 2024 ~ `RLE 2024 adjusted`, TRUE ~ NA_character_),
+                                            Biome = `Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.`, 
+                                            GET_L2 = `IUCN_GET_2025_L2`,
+                                            GET_L3 = `IUCN_GET_2022_L3`) %>%
+                select(Realm_GETL1, Code, Biome, GET_L2, GET_L3, Year, Overall) %>%
+                filter(!is.na(Year), !is.na(Overall))
+
+```
+
+## Step 5: Calculate RLIE by GET and Year, national RLIE by Year
+
+```{r}
+
+#--------- RLIE Calculation: GET Level 2 by Year ---------
+RLIe_GET_L2 <- calcRLIE(combined_data, 
+                        RLE_criteria = "Overall", 
+                        group1 = "GET_L2", 
+                        group2 = "Year",
+                        n_boot = 5000) %>%
+               rename(GET_L2 = group1,
+                      Year = group2) 
+
+#--------- RLIE Calculation: GET Level 3 by Year ---------
+RLIe_GET_L3 <- calcRLIE(combined_data, 
+                        RLE_criteria = "Overall", 
+                        group1 = "GET_L3", 
+                        group2 = "Year",
+                        n_boot = 5000) %>%
+               rename(GET_L3 = group1,
+                      Year = group2)
+
+#--------- Calculate RLIE: national ---------
+RLIe_national <- calcRLIE(combined_data,
+                          RLE_criteria = "Overall",
+                          group2 = "Year",
+                          n_boot = 5000) %>%
+                 mutate(Analysis_Level = "Aggregate")  # placeholder for uniform binding
+
+#--------- Combine results ---------
+RLIe_all <- bind_rows(RLIe_GET_L2, RLIe_GET_L3, RLIe_national)
+
+
+```
+
+```{r, echo=FALSE}
+# ---- Color Palette ----
+GET_L2 <- unique(RLIe_GET_L2$GET_L2)
+get_colors <- setNames(brewer.pal(length(GET_L2), "Paired"), GET_L2)
+
+nba_index_plot(TYPE = "RLIe",
+    DF = RLIe_GET_L2,
+    YEAR = "Year",
+    RLIE = "RLIE",
+    BIOME = "GET_L2",
+    PALETTE = get_colors,
+    SAVE = NULL)
+
+nba_index_plot(TYPE = "RLIe",
+    DF = RLIe_GET_L3,
+    YEAR = "Year",
+    RLIE = "RLIE",
+    BIOME = "GET_L3",
+    PALETTE = "biome",
+    SAVE = NULL)
+```

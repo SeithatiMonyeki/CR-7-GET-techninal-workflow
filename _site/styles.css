@@ -1,0 +1,82 @@
+/* css styles */
+
+.title {
+  font-weight: bold;
+  font-size: 23px;
+  color: gray;
+  font-family: Arial;
+ }
+
+h1{
+  font-size: 22px;
+  margin-top:17px;
+  margin-bottom:7px;
+}
+
+h2{
+  font-size: 20px;
+  margin-top:17px;
+  margin-bottom:7px;
+}
+
+h3{
+  font-size: 18px;
+  margin-top:17px;
+  margin-bottom:7px;
+}
+
+h4{
+  font-size: 16px;
+  margin-top:17px;
+  margin-bottom:7px;
+}
+
+
+body{ /* Normal  */
+  font-size: 15px;
+  line-height: 2;
+  font-family: Arial
+   margin: 9;
+}
+
+.column {
+  border: 10px solid #f8f9fa;  
+  padding: 10px;  /* Space inside the border */
+  font-size: 14.5px;
+}
+
+.col {
+/*  border: 1.5px solid olive; */ 
+  padding: 10px;  /* Space inside the border */
+  font-size: 14px;
+}
+
+.text-col {
+  padding: 10px;  /* Space inside the border */
+  /*background-color: #F6F8FB;*/
+  background-color: #f8f9fa;
+  font-size: 14px;
+}
+
+/* Reduce line height for figure captions */
+.quarto-figure-caption {
+  line-height: 1.0;  /* Adjust to your desired spacing */
+  margin-top: 5px;   /* Reduce the space above the caption */
+  margin-bottom: 0;  /* Remove space below the caption */
+}        
+
+/* Reduce line height for table captions */
+.table-caption {
+  line-height: 1.0;  /* Adjust this value for the table caption */
+  margin-top: 5px;   /* Reduce the space above the table caption */
+  margin-bottom: 0;  /* Remove space below the table caption */
+  }
+  
+
+/* Customize the sidebar background and font */
+.sidebar {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+}
+
