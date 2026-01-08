@@ -29,10 +29,11 @@ library(RColorBrewer)
 #library(openxlsx)
 ```
 
-## Data Integration and Preparation
+# Data Integration and Preparation
 
 Here, we integrated data from the Ecosystem Description Database (EDD) with multiple Red List of Ecosystems (RLE) assessments to analyze temporal changes in ecosystem conservation status. The EDD dataset was filtered to include only terrestrial ecosystems recognized in the 2024 National Vegetation Map with valid 2024/5 RLE status. We extracted ecosystem classification variables (realm, code, type, bioregion, and biome) and IUCN Global Ecosystem Typology classifications (2022 Level 3 and 2025 Level 2), then joined these with the RLE assessments from 2014, 2018, 2020, and 2024. This integration enabled temporal analysis of threat status changes over the past decade, providing a comprehensive view of ecosystem classification, current conservation status, and historical trends for South African terrestrial ecosystems.
 
+::: scrolling
 ```{r}
 
 EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
@@ -61,12 +62,13 @@ RLE <- readxl::read_excel("./data/multiple RLE assessments.xlsx") %>%
 data <- EDD %>%
         left_join(RLE, by = c("Code" = "MapCode"))
 ```
+:::
 
 # RLIe computation workflow
 
 To compute the Red List Index of Ecosystems (RLIe), three modular functions were developed to simplify, standardise, and extend the computation across groupings.
 
-*Function Roles:*
+***Function Roles:***
 
 -   *calcWeights()* - a helper function that assigns numeric weights to IUCN Red List of Ecosystems (RLE) categories.
 -   *bootstrap_rlie()* - a statistical helper function that estimates uncertainty around the RLIe by generating bootstrap confidence intervals.
@@ -76,7 +78,7 @@ Together, these functions allow RLIe to be calculated consistently for the full 
 
 ## Step 1: Define function to assign weights to RLE categories
 
-*The calcWeights() function takes two arguments*:
+***The calcWeights() function takes two arguments***:
 
 -   *data*: a data frame containing ecosystem assessment information
 -   *RLE_criteria*: the name of the column containing RLE category codes (e.g. LC, NT, VU, EN, CR, CO).
@@ -105,7 +107,7 @@ calcWeights <- function(data, RLE_criteria) {
 
 Uncertainty in RLIe values is quantified using non-parametric bootstrap resampling (i.e. no assumption being made about the shape of the data distribution as inputs are ordinal category weights, not continuous measurements & group sizes differ across GET levels).
 
-*The bootstrap_rlie() function:*
+***The bootstrap_rlie() function:***
 
 -   Takes a vector of category weights (0–5)
 -   Randomly resamples the weights with replacement
@@ -115,7 +117,7 @@ Uncertainty in RLIe values is quantified using non-parametric bootstrap resampli
 
 These percentiles define a 95% confidence interval around the RLIe estimate, representing the range within which the true index value is likely to lie.
 
-*Calculation of the index*
+***Calculation of the index***
 
 These ordinal ranks are used to calculate the Red List Index for Ecosystems (RLIE) and the RLIE ranges from zero (all ecosystems Collapsed) to one (all Least Concern).
 
@@ -157,7 +159,7 @@ The calcRLIE() function calculates the Red List Index of Ecosystems (RLIe) for a
 
 The function starts off by cleaning the data - removing unevaluated ecosystems, converts risk categories into numeric weights, and calculates RLIe scores either for the entire dataset or by groups (like GET levels and year). To account for uncertainty, it performs 5,000 bootstrap simulations to generate 95% confidence intervals around each score. The output is a table showing RLIe values with their confidence bounds.
 
-
+::: scrolling
 ```{r}
 
 calcRLIE <- function(data, RLE_criteria, group1 = NULL, group2 = NULL, n_boot = 5000) {
@@ -227,6 +229,7 @@ calcRLIE <- function(data, RLE_criteria, group1 = NULL, group2 = NULL, n_boot = 
 }
 
 ```
+:::
 
 ## Step 4: Reshape data from wide to long format
 
@@ -253,16 +256,10 @@ combined_data <- data %>%
 
 ## Step 5: Calculate RLIE by GET and Year, national RLIE by Year
 
-```{r}
+calculates the Red List Index of Ecosystems (RLIe) using bootstrap confidence intervals (n = 5000) for (i) GET Level 2 ecosystems by year, (ii) GET Level 3 ecosystems by year, and (iii) a national‐level aggregate by year, and then combines all results into a single dataset for consistent reporting and comparison.
 
-#--------- RLIE Calculation: GET Level 2 by Year ---------
-RLIe_GET_L2 <- calcRLIE(combined_data, 
-                        RLE_criteria = "Overall", 
-                        group1 = "GET_L2", 
-                        group2 = "Year",
-                        n_boot = 5000) %>%
-               rename(GET_L2 = group1,
-                      Year = group2) 
+::: scrolling
+```{r}
 
 #--------- RLIE Calculation: GET Level 3 by Year ---------
 RLIe_GET_L3 <- calcRLIE(combined_data, 
@@ -270,14 +267,26 @@ RLIe_GET_L3 <- calcRLIE(combined_data,
                         group1 = "GET_L3", 
                         group2 = "Year",
                         n_boot = 5000) %>%
-               rename(GET_L3 = group1,
-                      Year = group2)
+               rename(GET = group1,
+                      Year = group2) %>%
+               mutate(Analysis_Level = "GET_L3") 
+
+#--------- RLIE Calculation: GET Level 2 by Year ---------
+RLIe_GET_L2 <- calcRLIE(combined_data, 
+                        RLE_criteria = "Overall", 
+                        group1 = "GET_L2", 
+                        group2 = "Year",
+                        n_boot = 5000) %>%
+               rename(GET = group1,
+                      Year = group2) %>%
+               mutate(Analysis_Level = "GET_L2") 
 
 #--------- Calculate RLIE: national ---------
 RLIe_national <- calcRLIE(combined_data,
                           RLE_criteria = "Overall",
                           group2 = "Year",
                           n_boot = 5000) %>%
+                 rename(Year = group2) %>%
                  mutate(Analysis_Level = "Aggregate")  # placeholder for uniform binding
 
 #--------- Combine results ---------
@@ -285,6 +294,95 @@ RLIe_all <- bind_rows(RLIe_GET_L2, RLIe_GET_L3, RLIe_national)
 
 
 ```
+:::
+
+```{r, eval=FALSE, echo=FALSE}
+
+# ---- Constants ----
+#SCALE_TEXT <- 0.6
+
+# ---- Data Prep ----
+biomes <- RLIe.all %>%
+          filter(!is.na(Biome)) %>%
+          pull(Biome) %>%
+          factor() %>%
+          droplevels() %>%
+          levels()
+
+biome_data   <- filter(RLIe.all, !is.na(Biome))
+overall_data <- filter(RLIe.all,  is.na(Biome))
+
+# ---- Color Palette ----
+biome_colors <- setNames(brewer.pal(length(biomes), "Paired"), biomes)
+
+# ---- Plot ----
+RLIe_plot <- ggplot() +
+  
+             # Biomes
+             geom_line(data = biome_data, aes(x = Year, 
+                                              y = RLIE, 
+                                              color = Biome), 
+                                              size = 0.35) +
+  
+             geom_point(data = biome_data, aes(x = Year, 
+                                               y = RLIE, 
+                                               color = Biome), 
+                                               size = 2) +
+  
+             # Aggregate
+             geom_line(data = overall_data, aes(x = Year, 
+                                                y = RLIE, 
+                                                linetype = "Aggregate", 
+                                                shape = "Aggregate"),
+                                                color = "black", 
+                                                size = 0.35) +
+  
+             geom_point(data = overall_data, aes(x = Year, 
+                                                 y = RLIE, 
+                                                 shape = "Aggregate"),
+                                                 color = "black", 
+                                                 size = 2) +
+
+            # ---- Scales ----
+            scale_color_manual(name   = "Biome",
+                               values = biome_colors) +
+  
+            scale_linetype_manual(name   = "",
+                                  values = c("Aggregate" = "dotted"),
+                                  guide  = guide_legend(order = 2)) +
+  
+            scale_shape_manual(name   = "",
+                               values = c("Aggregate" = 20),
+                               guide  = guide_legend(order = 2)) +
+  
+            scale_x_continuous(breaks = unique(RLIe.all$Year)) +
+            scale_y_continuous(limits = c(0.4, 1),
+                               breaks = seq(0.5, 1, 0.1)) +
+
+            # ---- Labels ----
+            labs(x = "Year",
+                 y = "Red List Index of ecosystems") +
+
+           # ---- Theme ----
+           theme_classic() +
+           theme(legend.position   = "right",
+                 legend.box        = "vertical",
+                 legend.text       = element_text(size = 14 * SCALE_TEXT),
+                 legend.title      = element_text(size = 16 * SCALE_TEXT),
+                 legend.spacing.y  = unit(0.1, 'cm'),
+                 legend.key.size   = unit(0.5, "cm"),
+                 axis.title.x      = element_text(size = 16 * SCALE_TEXT, margin = margin(t = 12)),
+                 axis.title.y      = element_text(size = 16 * SCALE_TEXT, margin = margin(r = 12)),
+                 axis.text         = element_text(size = 14 * SCALE_TEXT))
+
+print(RLIe_plot)
+
+
+```
+
+```
+
+
 
 ```{r, echo=FALSE}
 # ---- Color Palette ----

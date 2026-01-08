@@ -220,9 +220,10 @@ window.Quarto = {
 </header>
 
 
-<section id="data-integration-and-preparation" class="level2">
-<h2 class="anchored" data-anchor-id="data-integration-and-preparation">Data Integration and Preparation</h2>
+<section id="data-integration-and-preparation" class="level1">
+<h1>Data Integration and Preparation</h1>
 <p>Here, we integrated data from the Ecosystem Description Database (EDD) with multiple Red List of Ecosystems (RLE) assessments to analyze temporal changes in ecosystem conservation status. The EDD dataset was filtered to include only terrestrial ecosystems recognized in the 2024 National Vegetation Map with valid 2024/5 RLE status. We extracted ecosystem classification variables (realm, code, type, bioregion, and biome) and IUCN Global Ecosystem Typology classifications (2022 Level 3 and 2025 Level 2), then joined these with the RLE assessments from 2014, 2018, 2020, and 2024. This integration enabled temporal analysis of threat status changes over the past decade, providing a comprehensive view of ecosystem classification, current conservation status, and historical trends for South African terrestrial ecosystems.</p>
+<div class="scrolling">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>EDD <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./data/EDDFullfile_L4L5_V4_17092025s.csv"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">filter</span>(VT.Present.NVM<span class="fl">.2024</span>  <span class="sc">%in%</span> <span class="st">"TRUE"</span>,</span>
@@ -250,11 +251,12 @@ window.Quarto = {
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> EDD <span class="sc">%&gt;%</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">left_join</span>(RLE, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Code"</span> <span class="ot">=</span> <span class="st">"MapCode"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 </section>
 <section id="rlie-computation-workflow" class="level1 page-columns page-full">
 <h1>RLIe computation workflow</h1>
 <p>To compute the Red List Index of Ecosystems (RLIe), three modular functions were developed to simplify, standardise, and extend the computation across groupings.</p>
-<p><em>Function Roles:</em></p>
+<p><strong><em>Function Roles:</em></strong></p>
 <ul>
 <li><em>calcWeights()</em> - a helper function that assigns numeric weights to IUCN Red List of Ecosystems (RLE) categories.</li>
 <li><em>bootstrap_rlie()</em> - a statistical helper function that estimates uncertainty around the RLIe by generating bootstrap confidence intervals.</li>
@@ -263,7 +265,7 @@ window.Quarto = {
 <p>Together, these functions allow RLIe to be calculated consistently for the full dataset (ungrouped) or disaggregated by one or more grouping variables (e.g.&nbsp;functional groups and assessment year).</p>
 <section id="step-1-define-function-to-assign-weights-to-rle-categories" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-define-function-to-assign-weights-to-rle-categories">Step 1: Define function to assign weights to RLE categories</h2>
-<p><em>The calcWeights() function takes two arguments</em>:</p>
+<p><strong><em>The calcWeights() function takes two arguments</em></strong>:</p>
 <ul>
 <li><em>data</em>: a data frame containing ecosystem assessment information</li>
 <li><em>RLE_criteria</em>: the name of the column containing RLE category codes (e.g.&nbsp;LC, NT, VU, EN, CR, CO).</li>
@@ -288,7 +290,7 @@ window.Quarto = {
 <section id="step-2-define-bootstrap-function-for-confidence-intervals" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="step-2-define-bootstrap-function-for-confidence-intervals">Step 2: Define bootstrap function for confidence intervals</h2>
 <p>Uncertainty in RLIe values is quantified using non-parametric bootstrap resampling (i.e.&nbsp;no assumption being made about the shape of the data distribution as inputs are ordinal category weights, not continuous measurements &amp; group sizes differ across GET levels).</p>
-<p><em>The bootstrap_rlie() function:</em></p>
+<p><strong><em>The bootstrap_rlie() function:</em></strong></p>
 <ul>
 <li>Takes a vector of category weights (0–5)</li>
 <li>Randomly resamples the weights with replacement</li>
@@ -297,7 +299,7 @@ window.Quarto = {
 <li>Extracts the 2.5th and 97.5th percentiles of the bootstrap distribution</li>
 </ul>
 <p>These percentiles define a 95% confidence interval around the RLIe estimate, representing the range within which the true index value is likely to lie.</p>
-<p><em>Calculation of the index</em></p>
+<p><strong><em>Calculation of the index</em></strong></p>
 <p>These ordinal ranks are used to calculate the Red List Index for Ecosystems (RLIE) and the RLIE ranges from zero (all ecosystems Collapsed) to one (all Least Concern).</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
@@ -333,6 +335,7 @@ RLIE_t = 1- \frac{\sum_{i = 1}^{n} W_{C_{i,j}}}{W_{{CO}^n}}
 <li><em>bootstrap_rlie()</em> – performs non-parametric bootstrap resampling to generate confidence intervals</li>
 </ul>
 <p>The function starts off by cleaning the data - removing unevaluated ecosystems, converts risk categories into numeric weights, and calculates RLIe scores either for the entire dataset or by groups (like GET levels and year). To account for uncertainty, it performs 5,000 bootstrap simulations to generate 95% confidence intervals around each score. The output is a table showing RLIe values with their confidence bounds.</p>
+<div class="scrolling">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>calcRLIE <span class="ot">&lt;-</span> <span class="cf">function</span>(data, RLE_criteria, <span class="at">group1 =</span> <span class="cn">NULL</span>, <span class="at">group2 =</span> <span class="cn">NULL</span>, <span class="at">n_boot =</span> <span class="dv">5000</span>) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -400,6 +403,7 @@ RLIE_t = 1- \frac{\sum_{i = 1}^{n} W_{C_{i,j}}}{W_{{CO}^n}}
 <span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 </section>
 <section id="step-4-reshape-data-from-wide-to-long-format" class="level2">
 <h2 class="anchored" data-anchor-id="step-4-reshape-data-from-wide-to-long-format">Step 4: Reshape data from wide to long format</h2>
@@ -423,6 +427,7 @@ RLIE_t = 1- \frac{\sum_{i = 1}^{n} W_{C_{i,j}}}{W_{{CO}^n}}
 </section>
 <section id="step-5-calculate-rlie-by-get-and-year-national-rlie-by-year" class="level2">
 <h2 class="anchored" data-anchor-id="step-5-calculate-rlie-by-get-and-year-national-rlie-by-year">Step 5: Calculate RLIE by GET and Year, national RLIE by Year</h2>
+<div class="scrolling">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#--------- RLIE Calculation: GET Level 2 by Year ---------</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>RLIe_GET_L2 <span class="ot">&lt;-</span> <span class="fu">calcRLIE</span>(combined_data, </span>
@@ -451,6 +456,7 @@ RLIE_t = 1- \frac{\sum_{i = 1}^{n} W_{C_{i,j}}}{W_{{CO}^n}}
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#--------- Combine results ---------</span></span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>RLIe_all <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(RLIe_GET_L2, RLIe_GET_L3, RLIe_national)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
