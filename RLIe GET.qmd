@@ -31,7 +31,7 @@ library(RColorBrewer)
 
 # Data Integration and Preparation
 
-Here, we integrated data from the Ecosystem Description Database (EDD) with multiple Red List of Ecosystems (RLE) assessments to analyze temporal changes in ecosystem conservation status. The EDD dataset was filtered to include only terrestrial ecosystems recognized in the 2024 National Vegetation Map with valid 2024/5 RLE status. We extracted ecosystem classification variables (realm, code, type, bioregion, and biome) and IUCN Global Ecosystem Typology classifications (2022 Level 3 and 2025 Level 2), then joined these with the RLE assessments from 2014, 2018, 2020, and 2024. This integration enabled temporal analysis of threat status changes over the past decade, providing a comprehensive view of ecosystem classification, current conservation status, and historical trends for South African terrestrial ecosystems.
+Here, we integrated data from the Ecosystem Description Database (EDD) with multiple Red List of Ecosystems (RLE) assessments to analyze temporal changes in ecosystem threat status. The EDD dataset was filtered to include only terrestrial ecosystems recognized in the 2024 National Vegetation Map with valid 2024/5 RLE status. We extracted ecosystem classification variables (realm, code, type, bioregion, and biome) and IUCN Global Ecosystem Typology classifications (2022 Level 3 and 2025 Level 2), then joined these with the RLE assessments from 2014, 2018, 2020, and 2024. This integration enabled temporal analysis of threat status changes over the past decade, providing a comprehensive view of ecosystem classification, current conservation status, and historical trends for South African terrestrial ecosystems.
 
 ::: scrolling
 ```{r}
@@ -304,7 +304,7 @@ writexl::write_xlsx(RLIe_all, "./data/RLIe_scores.xlsx")
 ## Data
 
 ::: scrolling
-```{r, echo=FALSE}
+```{r}
 #| classes: plain
 #| echo: false
 #| label: tbl-RLIes
@@ -321,24 +321,18 @@ gt(RLIe_all) %>%
               upper = "Upper bound",
               criteria = "Criteria",
               Analysis_Level = "Analysis level") %>%
+   nba_tbl_theme() %>%
+   tab_options(table.width = pct(100),
+              data_row.padding = px(12)) %>%
 
-   tab_options(heading.align = 'left',
-               table.width = pct(80),
-               table.background.color = "#FFFFFF00", 
-               table.font.color = "black",
-               table.font.size = px(13L),
-               table.border.top.width = 4,
-               data_row.padding = px(13), 
-               heading.title.font.size = px(12)) %>%
+  tab_style(style = cell_fill(color = "white"),
+            locations = cells_column_labels(columns = everything())) %>%
   
-   cols_align(align = "center", 
-              columns = where(is.character)) %>%
-
-   cols_align(align = "left", 
-              columns = "GET") %>%    
+  tab_style(style = cell_borders(sides = c("left", "right"), color = "transparent", weight = px(0)),
+            locations = cells_column_labels(columns = everything())) %>%
   
-   cols_align(align = "center", 
-              columns = where(is.numeric))
+  tab_style(style = cell_borders(sides = "bottom", color = "grey", weight = px(1)),
+            locations = cells_body(columns = everything())) 
 
 ```
 :::
