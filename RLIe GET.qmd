@@ -30,7 +30,7 @@ library(RColorBrewer)
 
 # Data Integration and Preparation
 
-Here, we integrated data from the Ecosystem Description Database (EDD) with multiple Red List of Ecosystems (RLE) assessments to analyze temporal changes in ecosystem threat status. The EDD dataset was filtered to include only terrestrial ecosystems recognized in the 2024 National Vegetation Map with valid 2024/5 RLE status. We extracted ecosystem classification variables (realm, code, type, bioregion, and biome) and IUCN Global Ecosystem Typology classifications (2022 Level 3 and 2025 Level 2), then joined these with the RLE assessments from 2014, 2018, 2020, and 2024. This integration enabled temporal analysis of threat status changes over the past decade, providing a comprehensive view of ecosystem classification, current conservation status, and historical trends for South African terrestrial ecosystems.
+Here, we integrated data from the Ecosystem Description Database (EDD) with multiple Red List of Ecosystems (RLE) assessments to analyze temporal changes in ecosystem threat status. The EDD dataset was filtered to include only terrestrial ecosystems recognized in the 2024 National Vegetation Map with valid 2024/5 RLE status. We extracted ecosystem classification variables (realm, code, type, bioregion, and biome) and IUCN Global Ecosystem Typology classifications (2022 Level 3 and 2025 Level 2), then joined these with the RLE assessments from 2014, 2018, 2020, and 2024. This integration enabled temporal analysis of threat status changes over the past decade, providing a comprehensive view of ecosystem classification, current threat status, and historical trends for South African terrestrial ecosystems.
 
 ::: scrolling
 ```{r}
@@ -64,6 +64,10 @@ data <- EDD %>%
 :::
 
 # RLIe computation workflow
+
+The Red List Index of Ecosystems (RLIe) is a headline indicator of the Kunming-Montreal Global Biodiversity Framework, designed to support monitoring progress toward ecosystem-focused goals and targets established under the Convention on Biological Diversity. The RLIe summarises the overall level of risk across a group of ecosystems, based on assessments conducted using the Red List of Ecosystems (RLE) framework.
+
+Because the RLIe is derived from RLE assessments, ecosystem risk categories (e.g., Least Concern, Vulnerable, Endangered, Critically Endangered) are first converted into ordinal weights that reflect increasing levels of threat. These weights are then aggregated to produce a single index value ranging from 0 (all ecosystems collapsed) to 1 (all ecosystems are Least Concern), providing a summary measure of the collective status of ecosystems within a group.
 
 To compute the Red List Index of Ecosystems (RLIe), three modular functions were developed to simplify, standardise, and extend the computation across groupings.
 
@@ -104,7 +108,9 @@ calcWeights <- function(data, RLE_criteria) {
 
 ## Step 2: Define bootstrap function for confidence intervals
 
-Uncertainty in RLIe values is quantified using non-parametric bootstrap resampling (i.e. no assumption being made about the shape of the data distribution as inputs are ordinal category weights, not continuous measurements & group sizes differ across GET levels).
+The RLIe is often calculated using a relatively small and uneven number of ecosystem types within a group or ecosystem classification level. Because the index is sensitive to ecosystem composition—both in terms of the number of types assessed and variation in threat status categories—the resulting RLIe values are subject to uncertainty and are not perfectly precise. Consequently, small changes in the set of assessed ecosystems can lead to noticeable changes in the index score.
+
+To quantify this uncertainty, non-parametric bootstrap resampling was applied. For each bootstrap iteration, ecosystems within each group or classification level were sampled with replacement to generate a new dataset of the same size as the original group. As a result, some ecosystems may appear more than once in a given resample, while others may be omitted, although the overall sample size is retained. The RLIe was then recalculated for each resampled dataset, and this process was repeated n times to generate a distribution of plausible RLIe values. From this distribution, the 2.5th and 97.5th percentiles were extracted to derive a 95% confidence interval around each RLIe estimate. 
 
 ***The bootstrap_rlie() function:***
 
