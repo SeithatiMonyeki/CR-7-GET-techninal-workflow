@@ -45,8 +45,58 @@ EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
               BioregionGETL4_Biogeographic_ecotypes, 
               Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.,
               IUCN_GET_2022_L3,
-              IUCN_GET_2025_L2)
-    
+              IUCN_GET_2025_L2) %>%
+      mutate(GET_L2.text = case_when(IUCN_GET_2025_L2 == "T1" ~ "Tropical-subtropical forests", 
+                                     IUCN_GET_2025_L2 == "T2" ~ "Temperate-boreal forests & woodlands", 
+                                     IUCN_GET_2025_L2 == "T3" ~ "Shrublands & shrubby woodlands",
+                                     IUCN_GET_2025_L2 == "T4" ~ "Savannas and grasslands", 
+                                     IUCN_GET_2025_L2 == "T5" ~ "Deserts and semi-deserts",
+                                     IUCN_GET_2025_L2 == "T6" ~ "Polar-alpine",
+                                     IUCN_GET_2025_L2 == "T7" ~ "Intensive land-use systems",
+                                     IUCN_GET_2025_L2 == "T8" ~ "Intensive land-use systems",
+                                     IUCN_GET_2025_L2 == "MT2" ~ "Supralittoral coastal systems", 
+                                     TRUE ~ "")) %>%
+
+      mutate(GET_L3.text = case_when(IUCN_GET_2022_L3 == "T1.1" ~ "Tropical-subtropical lowland rainforests", 
+                                     IUCN_GET_2022_L3 == "T1.2" ~ "Tropical-subtropical dry forests and thickets", 
+                                     IUCN_GET_2022_L3 == "T1.3" ~ "Tropical-subtropical montane rainforests", 
+                                     IUCN_GET_2022_L3 == "T1.4" ~ "Tropical heath forests", 
+                                     IUCN_GET_2022_L3 == "T2.1" ~ "Boreal and temperate high montane forests and woodlands", 
+                                     IUCN_GET_2022_L3 == "T2.2" ~ "Deciduous temperate forests", 
+                                     IUCN_GET_2022_L3 == "T2.3" ~ "Oceanic cool temperate rainforests", 
+                                     IUCN_GET_2022_L3 == "T2.4" ~ "Warm temperate laurophyll forests", 
+                                     IUCN_GET_2022_L3 == "T2.5" ~ "Temperate pyric humid forests", 
+                                     IUCN_GET_2022_L3 == "T2.6" ~ "Temperate pyric sclerophyll forests and woodlands", 
+                                     IUCN_GET_2022_L3 == "T3.1" ~ "Seasonally dry tropical shrublands",
+                                     IUCN_GET_2022_L3 == "T3.2" ~ "Seasonally dry temperate heaths and shrublands",
+                                     IUCN_GET_2022_L3 == "T3.3" ~ "Cool temperate heathlands",
+                                     IUCN_GET_2022_L3 == "T3.4" ~ "Rocky pavements, screes and lava flows",
+                                     IUCN_GET_2022_L3 == "T4.1" ~ "Trophic savannas",
+                                     IUCN_GET_2022_L3 == "T4.2" ~ "Pyric tussock savannas",
+                                     IUCN_GET_2022_L3 == "T4.3" ~ "Hummock savannas", 
+                                     IUCN_GET_2022_L3 == "T4.4" ~ "Temperate woodlands", 
+                                     IUCN_GET_2022_L3 == "T4.5" ~ "Temperate subhumid grasslands", 
+                                     IUCN_GET_2022_L3 == "T5.1" ~ "Semi-desert steppes",
+                                     IUCN_GET_2022_L3 == "T5.2" ~ "Thorny deserts and semi-deserts",
+                                     IUCN_GET_2022_L3 == "T5.3" ~ "Sclerophyll hot deserts and semi-deserts",
+                                     IUCN_GET_2022_L3 == "T5.4" ~ "Cool deserts and semi-deserts",
+                                     IUCN_GET_2022_L3 == "T5.5" ~ "Hyper-arid deserts",
+                                     IUCN_GET_2022_L3 == "T6.1" ~ "Ice sheets, glaciers and perennial snowfields", 
+                                     IUCN_GET_2022_L3 == "T6.2" ~ "Polar-alpine rocky outcrops",
+                                     IUCN_GET_2022_L3 == "T6.3" ~ "Polar tundra and deserts",
+                                     IUCN_GET_2022_L3 == "T6.4" ~ "Temperate alpine grasslands and shrublands",
+                                     IUCN_GET_2022_L3 == "T6.5" ~ "Tropical alpine grasslands and shrublands",
+                                     IUCN_GET_2022_L3 == "T7.1" ~ "Annual croplands",
+                                     IUCN_GET_2022_L3 == "T7.2" ~ "Sown pastures and fields",
+                                     IUCN_GET_2022_L3 == "T7.3" ~ "Plantations",
+                                     IUCN_GET_2022_L3 == "T7.4" ~ "Urban and industrial ecosystems",
+                                     IUCN_GET_2022_L3 == "T7.5" ~ "Derived semi-natural pastures and oldfield",
+                                     IUCN_GET_2022_L3 == "MT2.1" ~ "Coastal shrublands and grasslands",
+                                     TRUE ~ "")) %>%       
+      mutate(GET_L2.code_text = paste(IUCN_GET_2025_L2, GET_L2.text, sep = " : ")) %>%
+      mutate(GET_L3.code_text = paste(IUCN_GET_2022_L3, GET_L3.text, sep = " : ")) %>%
+      select(-c(GET_L2.text, GET_L3.text))
+  
 RLE <- readxl::read_excel("./data/multiple RLE assessments.xlsx") %>%
        select("MapCode",
               "Year.2014",
@@ -108,9 +158,9 @@ calcWeights <- function(data, RLE_criteria) {
 
 ## Step 2: Define bootstrap function for confidence intervals
 
-The RLIe is often calculated using a relatively small and uneven number of ecosystem types within a group or ecosystem classification level. Because the index is sensitive to ecosystem composition—both in terms of the number of types assessed and variation in threat status categories—the resulting RLIe values are subject to uncertainty and are not perfectly precise. Consequently, small changes in the set of assessed ecosystems can lead to noticeable changes in the index score.
+The Red List Index of Ecosystems (RLIe) is often calculated using a relatively small and uneven number of ecosystem types within a given ecosystem classification level. This is the case for the terrestrial Red List of Ecosystems (RLE) data, where RLIe values were calculated for ecosystems aggregated at the IUCN Global Ecosystem Typology (GET) Level 2 (Biomes) and Level 3 (Ecosystem Functional Groups). At both levels, groups differ in the number of ecosystem types assessed and in their composition of threat categories. As a result, the RLIe values are subject to uncertainty, and small changes in the set of assessed ecosystems can lead to noticeable changes in index scores.
 
-To quantify this uncertainty, non-parametric bootstrap resampling was applied. For each bootstrap iteration, ecosystems within each group or classification level were sampled with replacement to generate a new dataset of the same size as the original group. As a result, some ecosystems may appear more than once in a given resample, while others may be omitted, although the overall sample size is retained. The RLIe was then recalculated for each resampled dataset, and this process was repeated n times to generate a distribution of plausible RLIe values. From this distribution, the 2.5th and 97.5th percentiles were extracted to derive a 95% confidence interval around each RLIe estimate. 
+To quantify this uncertainty, a non-parametric bootstrap resampling approach was applied. Within each GET group, ecosystem types were repeatedly resampled with replacement, maintaining the original group size, and the RLIe was recalculated for each resample. Repeating this procedure n times produced a distribution of plausible RLIe values for each group. The 2.5th and 97.5th percentiles of this distribution were used to derive 95% confidence intervals around the RLIe estimates. Narrow confidence intervals indicate relatively stable index values, while wider intervals indicate greater uncertainty.
 
 ***The bootstrap_rlie() function:***
 
@@ -251,10 +301,10 @@ combined_data <- data %>%
                                             Year == 2018 ~ RLE2018.adjusted,
                                             Year == 2020 ~ RLE2020.adjusted,
                                             Year == 2024 ~ `RLE 2024 adjusted`, TRUE ~ NA_character_),
-                                            Biome = `Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.`, 
-                                            GET_L2 = `IUCN_GET_2025_L2`,
-                                            GET_L3 = `IUCN_GET_2022_L3`) %>%
-                select(Realm_GETL1, Code, Biome, GET_L2, GET_L3, Year, Overall) %>%
+                                            Fuctional_Groups = `Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.`, 
+                                            GET_L2 = `GET_L2.code_text`,
+                                            GET_L3 = `GET_L3.code_text`) %>%
+                select(Realm_GETL1, Code, Fuctional_Groups, GET_L2, GET_L3, Year, Overall) %>%
                 filter(!is.na(Year), !is.na(Overall))
 
 ```
