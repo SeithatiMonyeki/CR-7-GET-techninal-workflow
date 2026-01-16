@@ -46,6 +46,8 @@ EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
               Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.,
               IUCN_GET_2022_L3,
               IUCN_GET_2025_L2) %>%
+      group_by(IUCN_GET_2022_L3) %>%
+      summarise(n = n(), .groups = "drop") %>%
       mutate(GET_L2.text = case_when(IUCN_GET_2025_L2 == "T1" ~ "Tropical-subtropical forests", 
                                      IUCN_GET_2025_L2 == "T2" ~ "Temperate-boreal forests & woodlands", 
                                      IUCN_GET_2025_L2 == "T3" ~ "Shrublands & shrubby woodlands",
@@ -93,8 +95,8 @@ EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
                                      IUCN_GET_2022_L3 == "T7.5" ~ "Derived semi-natural pastures and oldfield",
                                      IUCN_GET_2022_L3 == "MT2.1" ~ "Coastal shrublands and grasslands",
                                      TRUE ~ "")) %>%       
-      mutate(GET_L2.code_text = paste(IUCN_GET_2025_L2, GET_L2.text, sep = " : ")) %>%
-      mutate(GET_L3.code_text = paste(IUCN_GET_2022_L3, GET_L3.text, sep = " : ")) %>%
+      mutate(GET_L2.code_text = paste(IUCN_GET_2025_L2, GET_L2.text, sep = ": ")) %>%
+      mutate(GET_L3.code_text = paste(IUCN_GET_2022_L3, GET_L3.text, sep = ": ")) %>%
       select(-c(GET_L2.text, GET_L3.text))
   
 RLE <- readxl::read_excel("./data/multiple RLE assessments.xlsx") %>%
@@ -395,7 +397,7 @@ gt(RLIe_all) %>%
 ## GET L2
 
 ::: scrolling
-```{r, echo=FALSE, fig.width=7.5, fig.height=4.5}
+```{r, echo=FALSE, fig.width=8, fig.height=4.5}
 #| label: fig-1
 #| fig-cap: "Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 2 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 2 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 2 categories."
 
@@ -425,7 +427,7 @@ RLIe_plot <- ggplot() +
              size = 3) +
   
   # Scales
-  scale_color_manual(name = "IUCN Global Ecosystem \nTypology (Level 2)", values = getL2_colors) +
+  scale_color_manual(name = "IUCN Global Ecosystem Typology (Level 2)", values = getL2_colors) +
   scale_linetype_manual(name = "", values = c("Aggregate" = "dotted"), guide = guide_legend(order = 2)) +
   scale_shape_manual(name = "", values = c("Aggregate" = 20), guide = guide_legend(order = 2)) +
   scale_x_continuous(breaks = unique(RLIe_all$Year)) +
@@ -455,7 +457,7 @@ print(RLIe_plot)
 ## GET L3
 
 ::: scrolling
-```{r, echo=FALSE, fig.width=7.5, fig.height=4.5}
+```{r, echo=FALSE, fig.width=8.5, fig.height=4.5}
 #| label: fig-2
 #| fig-cap: "Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 3 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 3 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 3 categories."
 #| 
@@ -487,7 +489,7 @@ RLIe_plot <- ggplot() +
              size = 3) +
   
   # Scales
-  scale_color_manual(name = "IUCN Global Ecosystem \nTypology (Level 3)", values = get_colors) +
+  scale_color_manual(name = "IUCN Global Ecosystem Typology (Level 3)", values = get_colors) +
   scale_linetype_manual(name = "", values = c("Aggregate" = "dotted"), guide = guide_legend(order = 2)) +
   scale_shape_manual(name = "", values = c("Aggregate" = 20), guide = guide_legend(order = 2)) +
   scale_x_continuous(breaks = unique(RLIe_all$Year)) +
