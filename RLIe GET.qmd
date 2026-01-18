@@ -46,8 +46,6 @@ EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
               Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.,
               IUCN_GET_2022_L3,
               IUCN_GET_2025_L2) %>%
-      group_by(IUCN_GET_2022_L3) %>%
-      summarise(n = n(), .groups = "drop") %>%
       mutate(GET_L2.text = case_when(IUCN_GET_2025_L2 == "T1" ~ "Tropical-subtropical forests", 
                                      IUCN_GET_2025_L2 == "T2" ~ "Temperate-boreal forests & woodlands", 
                                      IUCN_GET_2025_L2 == "T3" ~ "Shrublands & shrubby woodlands",
@@ -97,7 +95,11 @@ EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
                                      TRUE ~ "")) %>%       
       mutate(GET_L2.code_text = paste(IUCN_GET_2025_L2, GET_L2.text, sep = ": ")) %>%
       mutate(GET_L3.code_text = paste(IUCN_GET_2022_L3, GET_L3.text, sep = ": ")) %>%
-      select(-c(GET_L2.text, GET_L3.text))
+      add_count(IUCN_GET_2022_L3, name = "n.get_L3") %>%
+      add_count(IUCN_GET_2025_L2, name = "n.get_L2") %>%       
+      mutate(GET_L2.count = paste0(GET_L2.code_text, " (n = ", n.get_L2, ")"),
+             GET_L3.count = paste0(GET_L3.code_text, " (n = ", n.get_L3, ")")) %>%
+      select(-c(GET_L2.text, GET_L3.text, n.get_L3, n.get_L2))
   
 RLE <- readxl::read_excel("./data/multiple RLE assessments.xlsx") %>%
        select("MapCode",
@@ -306,7 +308,7 @@ combined_data <- data %>%
                                             Fuctional_Groups = `Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.`, 
                                             GET_L2 = `GET_L2.code_text`,
                                             GET_L3 = `GET_L3.code_text`) %>%
-                select(Realm_GETL1, Code, Fuctional_Groups, GET_L2, GET_L3, Year, Overall) %>%
+                select(Realm_GETL1, Code, Fuctional_Groups, GET_L2.count, GET_L3.count, Year, Overall) %>%
                 filter(!is.na(Year), !is.na(Overall))
 
 ```
@@ -325,22 +327,22 @@ calculates the Red List Index of Ecosystems (RLIe) using bootstrap confidence in
 #--------- RLIe Calculation: GET Level 3 by Year ---------
 RLIe_GET_L3 <- calcRLIE(combined_data, 
                         RLE_criteria = "Overall", 
-                        group1 = "GET_L3", 
+                        group1 = "GET_L3.count", 
                         group2 = "Year",
                         n_boot = 5000) %>%
                rename(GET = group1,
                       Year = group2) %>%
-               mutate(Analysis_Level = "GET_L3") 
+               mutate(Analysis_Level = "GET_L3.count") 
 
 #--------- RLIe Calculation: GET Level 2 by Year ---------
 RLIe_GET_L2 <- calcRLIE(combined_data, 
                         RLE_criteria = "Overall", 
-                        group1 = "GET_L2", 
+                        group1 = "GET_L2.count", 
                         group2 = "Year",
                         n_boot = 5000) %>%
                rename(GET = group1,
                       Year = group2) %>%
-               mutate(Analysis_Level = "GET_L2") 
+               mutate(Analysis_Level = "GET_L2.count") 
 
 #--------- Calculate RLIe: national ---------
 RLIe_national <- calcRLIE(combined_data,
@@ -515,3 +517,4 @@ print(RLIe_plot)
 ```
 :::
 :::
+

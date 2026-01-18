@@ -2,10 +2,128 @@
 title: "7th Country Reporting"
 ---
 
-This is a Quarto website.
+```{r setup}
+#| echo: false
+#| message: false
+#| warning: false
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+#if (!requireNamespace(c("magrittr","dplyr", "ggplot2", "ggthemes"), quietly = TRUE)) {
+#  install.packages(c("magrittr","dplyr", "ggplot2", "ggthemes"))
+#}
+
+#devtools::install_github("SANBI-NBA/nbaR", force = T)
+
+library(nbaR)
+library(dplyr)
+library(tidyr)
+#library(stringi)
+library(rlang)
+library(gt)
+library(ggplot2)
+library(RColorBrewer)
+
+```
+
+
+
+::: scrolling
+```{r}
+
+EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
+       mutate(Realm_GETL1 = case_when(Realm_GETL1 == "Terrestrial/Freshwater" ~ "Terrestrial", TRUE ~ Realm_GETL1)) %>%
+       mutate(across(c(IUCN_GET_2025_L2, IUCN_GET_2022_L3, RLE_2025, EPL_2025), ~ case_when(.x %in% c("",
+                                                                                                      "#N/A", 
+                                                                                                      "#VALUE!", 
+                                                                                                      "Not Evaluated")~NA_character_,
+                                                                                            TRUE ~ .x))) %>%
+       filter(!(is.na(IUCN_GET_2025_L2) | is.na(IUCN_GET_2022_L3) | is.na(RLE_2025))) %>%
+       filter(EPL_2025 %in% c("WP", "MP", "PP", "NP")) %>%
+       select(Realm_GETL1, Code, RLE_2025, EPL_2025, IUCN_GET_2025_L2, IUCN_GET_2022_L3) 
+
+```
+:::
+
 
 ```{r}
-1 + 1
+
+GET_L2.pivot <- EDD %>%
+                group_by(Realm_GETL1, IUCN_GET_2025_L2, RLE_2025) %>%
+                summarise(eco_count = n_distinct(Code),
+                          .groups = "drop") %>%
+                tidyr::pivot_wider(names_from = RLE_2025,
+                                   values_from = eco_count,
+                                   values_fill = 0) %>%
+                rename("Critically Endangered" = CR,
+                       "Endangered" = EN,
+                       "Vulnerable" = VU,
+                       "Least Concern" = LC)
+
+GET_L3.pivot <- EDD %>%
+                group_by(Realm_GETL1, IUCN_GET_2022_L3, RLE_2025) %>%
+                summarise(eco_count = n_distinct(Code),
+                          .groups = "drop") %>%
+                tidyr::pivot_wider(names_from = RLE_2025,
+                                   values_from = eco_count,
+                                   values_fill = 0) %>%
+                rename("Critically Endangered" = CR,
+                       "Endangered" = EN,
+                       "Vulnerable" = VU,
+                       "Least Concern" = LC)
+
 ```
+
+
+
+```{r, eval=FALSE}
+
+SCALE_TEXT <- 1.5  # adjust text scaling
+
+# ---- Plot 1: Percentage of ecosystem types ----
+
+Terr.GetL2_plot <- pivot %>%
+                   filter(Realm_GETL1 %in% "Terrestrial") %>%
+                   nba_plot(DF   = .,
+                       GROUPS = IUCN_GET_2025_L2,
+                       COLS = 3:6,
+                       CHRT = "bar",
+                       NUM  = FALSE,
+                       LAB  = "Percentage of ecosystem types",
+                       GRP  = FALSE,
+                       SAVE = NULL,
+                       SCALE_TEXT = 1,
+                       MAKE_PERCENT = FALSE)
+Terr.GetL2_plot
+
+# ---- Plot 1: Percentage of ecosystem types ----
+Estr.GetL2_plot <- pivot %>%
+                   filter(Realm_GETL1 %in% "Estuarine") %>%
+                   nba_plot(DF   = .,
+                            GROUPS = IUCN_GET_2025_L2,
+                            COLS = 3:6,
+                            CHRT = "bar",
+                            NUM  = FALSE,
+                            LAB  = "Percentage of ecosystem types",
+                            GRP  = FALSE,
+                            SAVE = NULL,
+                            SCALE_TEXT = 1,
+                            MAKE_PERCENT = FALSE)
+Estr.GetL2_plot
+
+# ---- Plot 1: Percentage of ecosystem types ----
+Frshwtr.GetL2_plot <- pivot %>%
+                      filter(Realm_GETL1 %in% "Freshwater_Wetland") %>%
+                      nba_plot(DF   = Frshwtr.pivot,
+                               GROUPS = .,
+                               COLS = 3:6,
+                               CHRT = "bar",
+                               NUM  = FALSE,
+                               LAB  = "Percentage of ecosystem types",
+                               GRP  = FALSE,
+                               SAVE = NULL,
+                               SCALE_TEXT = 1,
+                               MAKE_PERCENT = FALSE)
+Frshwtr.GetL2_plot
+
+
+```
+
