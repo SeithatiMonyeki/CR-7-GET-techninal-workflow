@@ -29,16 +29,18 @@ library(RColorBrewer)
 ::: scrolling
 ```{r}
 
-EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
-       mutate(Realm_GETL1 = case_when(Realm_GETL1 == "Terrestrial/Freshwater" ~ "Terrestrial", TRUE ~ Realm_GETL1)) %>%
-       mutate(across(c(IUCN_GET_2025_L2, IUCN_GET_2022_L3, RLE_2025, EPL_2025), ~ case_when(.x %in% c("",
-                                                                                                      "#N/A", 
-                                                                                                      "#VALUE!", 
-                                                                                                      "Not Evaluated")~NA_character_,
+EDD.GET_names <- read.csv("./data/EDD_GET levels names.csv") %>%
+                 mutate(Realm_GETL1 = case_when(Realm_GETL1 == "Terrestrial/Freshwater" ~ "Terrestrial", TRUE ~ Realm_GETL1)) %>%
+                 mutate(across(c(IUCN_GET_2025_L2, IUCN_GET_2022_L3, RLE_2025, EPL_2025), ~ case_when(.x %in% c("",
+                                                                                                                "#N/A", 
+                                                                                                                "#VALUE!", 
+                                                                                                                "Not Evaluated")  ~ NA_character_,
                                                                                             TRUE ~ .x))) %>%
        filter(!(is.na(IUCN_GET_2025_L2) | is.na(IUCN_GET_2022_L3) | is.na(RLE_2025))) %>%
        filter(EPL_2025 %in% c("WP", "MP", "PP", "NP")) %>%
-       select(Realm_GETL1, Code, RLE_2025, EPL_2025, IUCN_GET_2025_L2, IUCN_GET_2022_L3) 
+       mutate(GET_L2.code_text = paste(IUCN_GET_2025_L2, GET_L2.text, sep = ": ")) %>%
+       mutate(GET_L3.code_text = paste(IUCN_GET_2022_L3, GET_L3.text, sep = ": ")) %>%
+       select(Realm_GETL1, Code, RLE_2025, EPL_2025, GET_L2.code_text, GET_L3.code_text)      
 
 ```
 :::
@@ -46,84 +48,301 @@ EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
 
 ```{r}
 
-GET_L2.pivot <- EDD %>%
-                group_by(Realm_GETL1, IUCN_GET_2025_L2, RLE_2025) %>%
-                summarise(eco_count = n_distinct(Code),
-                          .groups = "drop") %>%
-                tidyr::pivot_wider(names_from = RLE_2025,
-                                   values_from = eco_count,
-                                   values_fill = 0) %>%
-                rename("Critically Endangered" = CR,
-                       "Endangered" = EN,
-                       "Vulnerable" = VU,
-                       "Least Concern" = LC)
 
-GET_L3.pivot <- EDD %>%
-                group_by(Realm_GETL1, IUCN_GET_2022_L3, RLE_2025) %>%
-                summarise(eco_count = n_distinct(Code),
-                          .groups = "drop") %>%
-                tidyr::pivot_wider(names_from = RLE_2025,
-                                   values_from = eco_count,
-                                   values_fill = 0) %>%
-                rename("Critically Endangered" = CR,
-                       "Endangered" = EN,
-                       "Vulnerable" = VU,
-                       "Least Concern" = LC)
+GET_L2.long <- EDD.GET_names %>%
+               group_by(Realm_GETL1, GET_L2.code_text, RLE_2025) %>%
+               summarise(Count = n_distinct(Code),.groups = "drop") %>%
+               mutate(RLE_2025 = factor(RLE_2025,levels = c("LC", "VU", "EN", "CR"),
+                                                 labels = c("Least Concern",
+                                                            "Vulnerable",
+                                                            "Endangered",
+                                                            "Critically Endangered")))
+
+
+GET_L3.long <- EDD.GET_names %>%
+               group_by(Realm_GETL1, GET_L3.code_text, RLE_2025) %>%
+               summarise(Count = n_distinct(Code),.groups = "drop") %>%
+               mutate(RLE_2025 = factor(RLE_2025,levels = c("LC", "VU", "EN", "CR"),
+                                                 labels = c("Least Concern",
+                                                            "Vulnerable",
+                                                            "Endangered",
+                                                            "Critically Endangered")))
 
 ```
 
 
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(scales)
+library(grid)
 
-```{r, eval=FALSE}
+plot_rle_bar <- function(data,
+                         group_var,
+                         rle_var,
+                         count_var,
+                         chart = c("percent", "count"),
+                         show  = c("percent", "count", "none"),
+                         show_legend = TRUE,
+                         caption = NULL,
+                         text_size = 12,
+                         label_size = 14,
+                         wrap_width = 25,
+                         bar_width = 0.7) {
 
-SCALE_TEXT <- 1.5  # adjust text scaling
+  # ---- ARGUMENT MATCHING ----
+  chart <- match.arg(chart)
+  show  <- match.arg(show)
 
-# ---- Plot 1: Percentage of ecosystem types ----
+  # ---- BAR POSITION TYPE ----
+  pos_type <- ifelse(chart == "percent", "fill", "stack")
 
-Terr.GetL2_plot <- pivot %>%
-                   filter(Realm_GETL1 %in% "Terrestrial") %>%
-                   nba_plot(DF   = .,
-                       GROUPS = IUCN_GET_2025_L2,
-                       COLS = 3:6,
-                       CHRT = "bar",
-                       NUM  = FALSE,
-                       LAB  = "Percentage of ecosystem types",
-                       GRP  = FALSE,
-                       SAVE = NULL,
-                       SCALE_TEXT = 1,
-                       MAKE_PERCENT = FALSE)
-Terr.GetL2_plot
+  # ---- BASE PLOT SETUP ----
+  p <- ggplot(data, aes(y    = {{ group_var }},
+                        x    = {{ count_var }},
+                        fill = factor({{ rle_var }},
+                                      levels = c("Least Concern",
+                                                 "Vulnerable",
+                                                 "Endangered",
+                                                 "Critically Endangered"))))
 
-# ---- Plot 1: Percentage of ecosystem types ----
-Estr.GetL2_plot <- pivot %>%
-                   filter(Realm_GETL1 %in% "Estuarine") %>%
-                   nba_plot(DF   = .,
-                            GROUPS = IUCN_GET_2025_L2,
-                            COLS = 3:6,
-                            CHRT = "bar",
-                            NUM  = FALSE,
-                            LAB  = "Percentage of ecosystem types",
-                            GRP  = FALSE,
-                            SAVE = NULL,
-                            SCALE_TEXT = 1,
-                            MAKE_PERCENT = FALSE)
-Estr.GetL2_plot
+  # ---- VERTICAL REFERENCE LINES (PERCENT ONLY) ----
+  if (chart == "percent") {
+    p <- p + geom_vline(xintercept = c(0, 0.5, 1),
+                        colour = "grey80",
+                        linewidth = 0.5)
+  }
 
-# ---- Plot 1: Percentage of ecosystem types ----
-Frshwtr.GetL2_plot <- pivot %>%
-                      filter(Realm_GETL1 %in% "Freshwater_Wetland") %>%
-                      nba_plot(DF   = Frshwtr.pivot,
-                               GROUPS = .,
-                               COLS = 3:6,
-                               CHRT = "bar",
-                               NUM  = FALSE,
-                               LAB  = "Percentage of ecosystem types",
-                               GRP  = FALSE,
-                               SAVE = NULL,
-                               SCALE_TEXT = 1,
-                               MAKE_PERCENT = FALSE)
-Frshwtr.GetL2_plot
+  # ---- BAR GEOMETRY ----
+  p <- p + geom_bar(stat     = "identity",
+                    position = pos_type,
+                    width    = bar_width)
+
+  # ---- REMOVE GAP BETWEEN BARS ----
+  p <- p + scale_y_discrete(expand = c(0, 0))
+
+  # ---- FILL COLOURS & LEGEND ----
+  p <- p + scale_fill_manual(values = c("#B4D79E", "yellow", "orange", "red"),
+                             name   = "Threat categories")
+
+  # ---- AXIS LABELS & CAPTION ----
+  p <- p + labs(x = ifelse(chart == "percent",
+                           "Percentage of ecosystem types",
+                           "Count of ecosystem types"),
+                y = NULL,
+                caption = caption)
+
+  # ---- THEME SETTINGS ----
+  p <- p +
+       theme_minimal() +
+       theme(text               = element_text(size = text_size),
+             legend.key.height  = unit(0.7, "cm"),
+             legend.key.width   = unit(0.6, "cm"),
+             plot.caption       = element_text(hjust = 0.2,
+                                               size = text_size - 2),
+             panel.grid.major.x = element_blank(),
+             panel.grid.minor.x = element_blank())
+
+  # ---- Y-AXIS LABEL WRAPPING & LEFT ALIGN TEXT ----
+  p <- p +
+       scale_y_discrete(labels = function(x) stringr::str_wrap(x,
+                                                               width = wrap_width)) +
+       theme(axis.text.y = element_text(hjust = 0,
+                                        margin = margin(r = 5)))
+
+  # ---- BAR LABELS ----
+  if (show == "percent" && chart == "percent") {
+    p <- p + geom_text(aes(label = scales::percent({{ count_var }} / sum({{ count_var }}),
+                                                  accuracy = 1)),
+                       position = position_fill(vjust = 0.5),
+                       size = label_size)
+  } else if (show == "count") {
+    p <- p + geom_text(aes(label = {{ count_var }}),
+                       position = position_fill(vjust = 0.5),
+                       size = label_size)
+  }
+
+  # ---- X-AXIS SCALE (PERCENT ONLY) ----
+  if (chart == "percent") {
+    p <- p + scale_x_continuous(breaks = c(0, 0.5, 1),
+                                labels = scales::percent_format(accuracy = 1))
+  }
+
+  # ---- SHOW OR HIDE LEGEND ----
+  if (!show_legend) {
+    p <- p + theme(legend.position = "none")
+  }
+
+  # ---- RETURN PLOT ----
+  return(p)
+}
 
 
 ```
+
+
+```{r, echo=FALSE}
+
+
+# ---- PLOTS ----
+GetL2_plot <- GET_L2.long %>%
+  plot_rle_bar(group_var = Realm_GETL1,
+               rle_var   = RLE_2025,
+               count_var = Count,
+               chart     = "percent",
+               show      = "none",
+               show_legend = FALSE,
+               wrap_width = 25,
+               bar_width = 0.5)
+
+GetL2_plot
+
+GetL3_plot <- GET_L3.long %>%
+  plot_rle_bar(group_var = Realm_GETL1,
+               rle_var   = RLE_2025,
+               count_var = Count,
+               chart     = "percent",
+               show      = "none",
+               show_legend = FALSE,
+               wrap_width = 25,
+               bar_width = 0.5)
+
+plots <- ggpubr::ggarrange(
+  GetL2_plot,
+  GetL3_plot,
+  ncol = 2,
+  nrow = 1,
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = c("A", "B"),
+  align = "hv"
+)
+
+plots
+```
+
+
+```{r, echo=FALSE}
+#| fig-width: 40
+#| fig-height: 60 
+
+# ---- PLOTS ----
+Terr.GetL2_plot <- GET_L2.long %>%
+  filter(Realm_GETL1 == "Terrestrial") %>%
+  plot_rle_bar(group_var = GET_L2.code_text,
+               rle_var   = RLE_2025,
+               count_var = Count,
+               chart     = "percent",
+               show      = "none",
+               show_legend = FALSE,
+               wrap_width = 25,
+               bar_width = 0.5)
+
+Terr.GetL3_plot <- GET_L3.long %>%
+  filter(Realm_GETL1 == "Terrestrial") %>%
+  plot_rle_bar(group_var = GET_L3.code_text,
+               rle_var   = RLE_2025,
+               count_var = Count,
+               chart     = "percent",
+               show      = "none",
+               show_legend = FALSE,
+               wrap_width = 25,
+               bar_width = 0.5)
+
+
+River.GetL2_plot <- GET_L2.long %>%
+  filter(Realm_GETL1 == "Freshwater_River") %>%
+  plot_rle_bar(group_var = GET_L2.code_text,
+               rle_var   = RLE_2025,
+               count_var = Count,
+               chart     = "percent",
+               show      = "none",
+               show_legend = FALSE,
+               wrap_width = 25,
+               bar_width = 0.2)
+
+River.GetL3_plot <- GET_L3.long %>%
+  filter(Realm_GETL1 == "Freshwater_River") %>%
+  plot_rle_bar(group_var = GET_L3.code_text,
+               rle_var   = RLE_2025,
+               count_var = Count,
+               chart     = "percent",
+               show      = "none",
+               show_legend = FALSE,
+               wrap_width = 25,
+               bar_width = 0.5)
+
+
+Wetland.GetL2_plot <- GET_L2.long %>%
+  filter(Realm_GETL1 == "Freshwater_Wetland") %>%
+  plot_rle_bar(group_var = GET_L2.code_text,
+               rle_var   = RLE_2025,
+               count_var = Count,
+               chart     = "percent",
+               show      = "none",
+               show_legend = FALSE,
+               wrap_width = 25,
+               bar_width = 0.5)
+
+Wetland.GetL3_plot <- GET_L3.long %>%
+  filter(Realm_GETL1 == "Freshwater_Wetland") %>%
+  plot_rle_bar(group_var = GET_L3.code_text,
+               rle_var   = RLE_2025,
+               count_var = Count,
+               chart     = "percent",
+               show      = "none",
+               show_legend = FALSE,
+               wrap_width = 25,
+               bar_width = 0.5)
+
+Estuarine.GetL2_plot <- GET_L2.long %>%
+  filter(Realm_GETL1 == "Estuarine") %>%
+  plot_rle_bar(group_var = GET_L2.code_text,
+               rle_var   = RLE_2025,
+               count_var = Count,
+               chart     = "percent",
+               show      = "none",
+               show_legend = FALSE,
+               wrap_width = 25,
+               bar_width = 0.2)
+
+Estuarine.GetL3_plot <- GET_L3.long %>%
+  filter(Realm_GETL1 == "Estuarine") %>%
+  plot_rle_bar(group_var = GET_L3.code_text,
+               rle_var   = RLE_2025,
+               count_var = Count,
+               chart     = "percent",
+               show      = "none",
+               show_legend = FALSE,
+               wrap_width = 25,
+               bar_width = 0.2)
+
+
+# ------------------------------------------------------------
+
+# ---- ARRANGE ----
+Terr_plots <- ggpubr::ggarrange(
+  Terr.GetL2_plot,
+  Terr.GetL3_plot,
+  Estuarine.GetL2_plot,
+  Estuarine.GetL3_plot,
+  River.GetL2_plot,
+  River.GetL3_plot,
+  Wetland.GetL2_plot,
+  Wetland.GetL3_plot,
+  ncol = 2,
+  nrow = 4,
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = c("A", "B", "C", "D", "E", "F", "G", "H"),
+  align = "hv"
+)
+
+Terr_plots
+
+
+```
+
+
 

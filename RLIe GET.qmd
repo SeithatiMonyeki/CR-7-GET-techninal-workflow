@@ -35,71 +35,78 @@ Here, we integrated data from the Ecosystem Description Database (EDD) with mult
 ::: scrolling
 ```{r}
 
-EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv") %>%
-       filter(VT.Present.NVM.2024  %in% "TRUE",
-              Realm_GETL1 %in% c("Terrestrial", "Terrestrial/Freshwater"),
-              RLE_2025 != "#N/A") %>%
-       select(Realm_GETL1, 
-              Code, 
-              EcosystemType_GETLevel5_6, 
-              BioregionGETL4_Biogeographic_ecotypes, 
-              Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.,
-              IUCN_GET_2022_L3,
-              IUCN_GET_2025_L2) %>%
-      mutate(GET_L2.text = case_when(IUCN_GET_2025_L2 == "T1" ~ "Tropical-subtropical forests", 
-                                     IUCN_GET_2025_L2 == "T2" ~ "Temperate-boreal forests & woodlands", 
-                                     IUCN_GET_2025_L2 == "T3" ~ "Shrublands & shrubby woodlands",
-                                     IUCN_GET_2025_L2 == "T4" ~ "Savannas and grasslands", 
-                                     IUCN_GET_2025_L2 == "T5" ~ "Deserts and semi-deserts",
-                                     IUCN_GET_2025_L2 == "T6" ~ "Polar-alpine",
-                                     IUCN_GET_2025_L2 == "T7" ~ "Intensive land-use systems",
-                                     IUCN_GET_2025_L2 == "T8" ~ "Intensive land-use systems",
-                                     IUCN_GET_2025_L2 == "MT2" ~ "Supralittoral coastal systems", 
-                                     TRUE ~ "")) %>%
+EDD <- read.csv("./data/EDDFullfile_L4L5_V4_17092025s.csv")  %>%
+       filter(VT.Present.NVM.2024  %in% "TRUE") %>%
+       mutate(Realm_GETL1 = case_when(Realm_GETL1 == "Terrestrial/Freshwater" ~ "Terrestrial", TRUE ~ Realm_GETL1)) %>%
+       mutate(across(c(IUCN_GET_2025_L2, 
+                       IUCN_GET_2022_L3, 
+                       RLE_2025, EPL_2025), ~ case_when(.x %in% c("",
+                                                                  "#N/A", 
+                                                                  "#VALUE!", 
+                                                                  "Not Evaluated")  ~ NA_character_, TRUE ~ .x))) %>%
+       filter(!(is.na(IUCN_GET_2025_L2) | is.na(IUCN_GET_2022_L3) | is.na(RLE_2025))) %>%
+       mutate(GET_L2.text = case_when(IUCN_GET_2025_L2 == "T1" ~ "Tropical-subtropical forests", 
+                                      IUCN_GET_2025_L2 == "T2" ~ "Temperate-boreal forests & woodlands", 
+                                      IUCN_GET_2025_L2 == "T3" ~ "Shrublands & shrubby woodlands",
+                                      IUCN_GET_2025_L2 == "T4" ~ "Savannas and grasslands", 
+                                      IUCN_GET_2025_L2 == "T5" ~ "Deserts and semi-deserts",
+                                      IUCN_GET_2025_L2 == "T6" ~ "Polar-alpine",
+                                      IUCN_GET_2025_L2 == "TF1" ~ "Palustrine wetlands",
+                                      IUCN_GET_2025_L2 == "F1" ~ "Rivers and streams", 
+                                      IUCN_GET_2025_L2 == "F2" ~ "Lakes", 
+                                      IUCN_GET_2025_L2 == "FM1" ~ "Semi-confined transitional waters",                                                            IUCN_GET_2025_L2 == "M1" ~ "Marine shelfs", 
+                                      IUCN_GET_2025_L2 == "M3" ~ "Deep sea floors", 
+                                      IUCN_GET_2025_L2 == "MFT1" ~ "Brackish tidal systems",
+                                      IUCN_GET_2025_L2 == "MT1" ~ "Shoreline systems",
+                                      IUCN_GET_2025_L2 == "MT2" ~ "Supralittoral coastal systems",
+                                      TRUE ~ "")) %>%
 
-      mutate(GET_L3.text = case_when(IUCN_GET_2022_L3 == "T1.1" ~ "Tropical-subtropical lowland rainforests", 
-                                     IUCN_GET_2022_L3 == "T1.2" ~ "Tropical-subtropical dry forests and thickets", 
-                                     IUCN_GET_2022_L3 == "T1.3" ~ "Tropical-subtropical montane rainforests", 
-                                     IUCN_GET_2022_L3 == "T1.4" ~ "Tropical heath forests", 
-                                     IUCN_GET_2022_L3 == "T2.1" ~ "Boreal and temperate high montane forests and woodlands", 
-                                     IUCN_GET_2022_L3 == "T2.2" ~ "Deciduous temperate forests", 
-                                     IUCN_GET_2022_L3 == "T2.3" ~ "Oceanic cool temperate rainforests", 
+      mutate(GET_L3.text = case_when(IUCN_GET_2022_L3 == "T1.2" ~ "Tropical-subtropical dry forests and thickets", 
                                      IUCN_GET_2022_L3 == "T2.4" ~ "Warm temperate laurophyll forests", 
-                                     IUCN_GET_2022_L3 == "T2.5" ~ "Temperate pyric humid forests", 
-                                     IUCN_GET_2022_L3 == "T2.6" ~ "Temperate pyric sclerophyll forests and woodlands", 
                                      IUCN_GET_2022_L3 == "T3.1" ~ "Seasonally dry tropical shrublands",
                                      IUCN_GET_2022_L3 == "T3.2" ~ "Seasonally dry temperate heaths and shrublands",
                                      IUCN_GET_2022_L3 == "T3.3" ~ "Cool temperate heathlands",
-                                     IUCN_GET_2022_L3 == "T3.4" ~ "Rocky pavements, screes and lava flows",
                                      IUCN_GET_2022_L3 == "T4.1" ~ "Trophic savannas",
                                      IUCN_GET_2022_L3 == "T4.2" ~ "Pyric tussock savannas",
-                                     IUCN_GET_2022_L3 == "T4.3" ~ "Hummock savannas", 
-                                     IUCN_GET_2022_L3 == "T4.4" ~ "Temperate woodlands", 
                                      IUCN_GET_2022_L3 == "T4.5" ~ "Temperate subhumid grasslands", 
                                      IUCN_GET_2022_L3 == "T5.1" ~ "Semi-desert steppes",
                                      IUCN_GET_2022_L3 == "T5.2" ~ "Thorny deserts and semi-deserts",
-                                     IUCN_GET_2022_L3 == "T5.3" ~ "Sclerophyll hot deserts and semi-deserts",
-                                     IUCN_GET_2022_L3 == "T5.4" ~ "Cool deserts and semi-deserts",
                                      IUCN_GET_2022_L3 == "T5.5" ~ "Hyper-arid deserts",
-                                     IUCN_GET_2022_L3 == "T6.1" ~ "Ice sheets, glaciers and perennial snowfields", 
-                                     IUCN_GET_2022_L3 == "T6.2" ~ "Polar-alpine rocky outcrops",
                                      IUCN_GET_2022_L3 == "T6.3" ~ "Polar tundra and deserts",
-                                     IUCN_GET_2022_L3 == "T6.4" ~ "Temperate alpine grasslands and shrublands",
-                                     IUCN_GET_2022_L3 == "T6.5" ~ "Tropical alpine grasslands and shrublands",
-                                     IUCN_GET_2022_L3 == "T7.1" ~ "Annual croplands",
-                                     IUCN_GET_2022_L3 == "T7.2" ~ "Sown pastures and fields",
-                                     IUCN_GET_2022_L3 == "T7.3" ~ "Plantations",
-                                     IUCN_GET_2022_L3 == "T7.4" ~ "Urban and industrial ecosystems",
-                                     IUCN_GET_2022_L3 == "T7.5" ~ "Derived semi-natural pastures and oldfield",
+                                     
+                                     IUCN_GET_2022_L3 == "TF1.1" ~ "Tropical flooded forests and peat forests",
+                                     IUCN_GET_2022_L3 == "TF1.3" ~ "Permanent marshes",
+                                     IUCN_GET_2022_L3 == "TF1.4" ~ "Seasonal floodplain marshes",
+                                     IUCN_GET_2022_L3 == "TF1.5" ~ "Episodic arid floodplains",
+                                     
+                                     IUCN_GET_2022_L3 == "F1.1" ~ "Permanent upland streams",
+                                     IUCN_GET_2022_L3 == "F1.2" ~ "Permanent lowland rivers",
+                                     IUCN_GET_2022_L3 == "F1.4" ~ "Seasonal upland streams",
+                                     IUCN_GET_2022_L3 == "F1.5" ~ "Seasonal lowland rivers",
+                                     IUCN_GET_2022_L3 == "F2.3" ~ "Seasonal freshwater lakes",
+                                     IUCN_GET_2022_L3 == "F2.5" ~ "Ephemeral freshwater lakes",
+                                     IUCN_GET_2022_L3 == "FM1.2" ~ "Permanently open riverine estuaries and bays",
+                                     IUCN_GET_2022_L3 == "FM1.3" ~ "Intermittently closed and open lakes and lagoons",
+                                     IUCN_GET_2022_L3 == "M1.2" ~ "Kelp forests",
+                                     IUCN_GET_2022_L3 == "M1.3" ~ "Photic coral reefs",
+                                     IUCN_GET_2022_L3 == "M1.5" ~ "Photo-limited marine animal forests",
+                                     IUCN_GET_2022_L3 == "M1.6" ~ "Subtidal rocky reefs",
+                                     IUCN_GET_2022_L3 == "M1.7" ~ "Subtidal sand beds",
+                                     IUCN_GET_2022_L3 == "M1.8" ~ "Subtidal mud plains",
+                                     IUCN_GET_2022_L3 == "M3.1" ~ "Continental and island slopes",
+                                     IUCN_GET_2022_L3 == "M3.2" ~ "Marine canyons",
+                                     IUCN_GET_2022_L3 == "M3.3" ~ "Abyssal plains",
+                                     IUCN_GET_2022_L3 == "M3.4" ~ "Seamounts, ridges and plateaus",
+                                     IUCN_GET_2022_L3 == "M3.5" ~ "Deepwater biogenic beds",
+                                     IUCN_GET_2022_L3 == "MFT1.2" ~ "Intertidal forests and shrublands",
+                                     IUCN_GET_2022_L3 == "MT1.1" ~ "Rocky shores",
+                                     IUCN_GET_2022_L3 == "MT1.3" ~ "Sandy shores",
+                                     IUCN_GET_2022_L3 == "MT1.4" ~ "Boulder and cobble shores",
                                      IUCN_GET_2022_L3 == "MT2.1" ~ "Coastal shrublands and grasslands",
-                                     TRUE ~ "")) %>%       
-      mutate(GET_L2.code_text = paste(IUCN_GET_2025_L2, GET_L2.text, sep = ": ")) %>%
-      mutate(GET_L3.code_text = paste(IUCN_GET_2022_L3, GET_L3.text, sep = ": ")) %>%
-      add_count(IUCN_GET_2022_L3, name = "n.get_L3") %>%
-      add_count(IUCN_GET_2025_L2, name = "n.get_L2") %>%       
-      mutate(GET_L2.count = paste0(GET_L2.code_text, " (n = ", n.get_L2, ")"),
-             GET_L3.count = paste0(GET_L3.code_text, " (n = ", n.get_L3, ")")) %>%
-      select(-c(GET_L2.text, GET_L3.text, n.get_L3, n.get_L2))
+                                     TRUE ~ "")) %>%      
+       select(Realm_GETL1, Code, EcosystemType_GETLevel5_6, RLE_2025, EPL_2025, IUCN_GET_2025_L2, IUCN_GET_2022_L3, GET_L2.text, GET_L3.text) 
+
+write.csv(EDD, "./data/EDD_GET levels names.csv")
   
 RLE <- readxl::read_excel("./data/multiple RLE assessments.xlsx") %>%
        select("MapCode",
@@ -113,7 +120,16 @@ RLE <- readxl::read_excel("./data/multiple RLE assessments.xlsx") %>%
               "RLE 2024 adjusted")
 
 data <- EDD %>%
-        left_join(RLE, by = c("Code" = "MapCode"))
+        filter( Realm_GETL1 %in% "Terrestrial") %>% 
+        mutate(GET_L2.code_text = paste(IUCN_GET_2025_L2, GET_L2.text, sep = ": ")) %>%
+        mutate(GET_L3.code_text = paste(IUCN_GET_2022_L3, GET_L3.text, sep = ": ")) %>%
+        add_count(IUCN_GET_2022_L3, name = "n.get_L3") %>%
+        add_count(IUCN_GET_2025_L2, name = "n.get_L2") %>%       
+        mutate(GET_L2.count = paste0(GET_L2.code_text, " (n = ", n.get_L2, " ecosystems)"),
+               GET_L3.count = paste0(GET_L3.code_text, " (n = ", n.get_L3, " ecosystems)")) %>%
+        left_join(RLE, by = c("Code" = "MapCode")) %>%
+        select(-c(GET_L2.code_text, GET_L3.code_text, n.get_L3, n.get_L2))
+
 ```
 :::
 
@@ -305,10 +321,9 @@ combined_data <- data %>%
                                             Year == 2018 ~ RLE2018.adjusted,
                                             Year == 2020 ~ RLE2020.adjusted,
                                             Year == 2024 ~ `RLE 2024 adjusted`, TRUE ~ NA_character_),
-                                            Fuctional_Groups = `Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.`, 
-                                            GET_L2 = `GET_L2.code_text`,
-                                            GET_L3 = `GET_L3.code_text`) %>%
-                select(Realm_GETL1, Code, Fuctional_Groups, GET_L2.count, GET_L3.count, Year, Overall) %>%
+                                            GET_L2 = `GET_L2.count`,
+                                            GET_L3 = `GET_L3.count`) %>%
+                select(Realm_GETL1, Code, EcosystemType_GETLevel5_6, GET_L2.count, GET_L3.count, Year, Overall) %>%
                 filter(!is.na(Year), !is.na(Overall))
 
 ```

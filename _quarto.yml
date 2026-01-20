@@ -27,7 +27,7 @@ format:
 
     grid:
       sidebar-width: 350px
-      body-width: 1200px
+      body-width: 1800px
       margin-width: 400px
       
 execute: 
