@@ -1,0 +1,307 @@
+---
+title: "7th Country Reporting"
+---
+
+```{r setup}
+
+#if (!requireNamespace(c("magrittr","dplyr", "ggplot2", "ggthemes"), quietly = TRUE)) {
+#  install.packages(c("magrittr","dplyr", "ggplot2", "ggthemes"))
+#}
+
+#devtools::install_github("SANBI-NBA/nbaR", force = T)
+
+library(nbaR)
+library(dplyr)
+library(tidyr)
+#library(stringi)
+library(rlang)
+library(gt)
+library(ggplot2)
+library(here)
+
+```
+
+::: scrolling
+```{r, echo=FALSE}
+
+EDD.GET_names <- read.csv("./data/EDD_GET levels names.csv") %>%
+                 mutate(GET_L2.code_text = paste(IUCN_GET_2025_L2, GET_L2.text, sep = ": ")) %>%
+                 mutate(GET_L3.code_text = paste(IUCN_GET_2022_L3, GET_L3.text, sep = ": ")) %>%
+                 select(Realm_GETL1, Code, EcosystemType_GETLevel5_6, RLE_2025, EPL_2025, IUCN_GET_2025_L2, IUCN_GET_2022_L3, GET_L2.code_text, GET_L3.code_text) %>%
+
+                 mutate(Realm = case_when(Realm_GETL1 == "Freshwater_Wetland" ~ "Wetland",
+                                          Realm_GETL1 == "Freshwater_River"   ~ "River", TRUE ~ Realm_GETL1),
+                        
+                        RLE_2025 = factor(RLE_2025, levels = c("LC", "NT", "VU", "EN", "CR"), 
+                                                    labels = c("Least Concern", "Near Threatened","Vulnerable", "Endangered", "Critically Endangered")))
+                 
+
+```
+:::
+
+```{r, echo=FALSE}
+# ----------
+# 1. GET_L3 
+# ----------
+
+#  -------1. Number of GET Level 2 per Realm per Threat Status -------
+GET_L2.count <- EDD.GET_names %>%
+                group_by(Realm, RLE_2025) %>%
+                summarise(Count = n_distinct(GET_L2.code_text), .groups = "drop")  %>%
+                           tidyr::pivot_wider(names_from = RLE_2025,
+                                       values_from = Count,
+                                       values_fill = 0) 
+
+#  -------2. Number of Ecosystem Types (GET_L5/6) per GET_L2 per Threat Status within each Realm -------
+GET_L2.ecosytems_count <- EDD.GET_names %>%
+                     group_by(Realm, IUCN_GET_2025_L2, GET_L2.code_text, RLE_2025) %>%
+                     summarise(Count = n_distinct(EcosystemType_GETLevel5_6), .groups = "drop")  %>%
+                           tidyr::pivot_wider(names_from = RLE_2025,
+                                       values_from = Count,
+                                       values_fill = 0)
+
+# ----------
+# 2. GET_L3 
+# ----------
+
+#  -------1. Number of GET Level 2 per Realm per Threat Status -------
+GET_L3.count <- EDD.GET_names %>%
+                group_by(Realm, RLE_2025) %>%
+                summarise(Count = n_distinct(GET_L3.code_text), .groups = "drop")%>%
+                           tidyr::pivot_wider(names_from = RLE_2025,
+                                       values_from = Count,
+                                       values_fill = 0) 
+
+
+
+#  -------2. Number of Ecosystem Types (GET_L5/6) per GET_L2 per Threat Status within each Realm -------
+GET_L3.ecosytems_count <- EDD.GET_names %>%
+                     group_by(Realm, IUCN_GET_2022_L3, GET_L3.code_text, RLE_2025) %>%
+                     summarise(Count = n_distinct(EcosystemType_GETLevel5_6), .groups = "drop")  %>%
+                           tidyr::pivot_wider(names_from = RLE_2025,
+                                       values_from = Count,
+                                       values_fill = 0)
+
+
+files <- list(GET_L2.count = GET_L2.count,
+              GET_L3.count = GET_L3.count,
+              GET_L2.ecosytems_count = GET_L2.ecosytems_count,
+              GET_L3.ecosytems_count = GET_L3.ecosytems_count)
+
+purrr::iwalk(files, ~ writexl::write_xlsx(.x, paste0("./data/", .y, ".xlsx")))
+
+```
+
+```{r, echo=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(scales)
+library(stringr)
+
+plot_rle_bar_wide <- function(data,
+                              group_var,
+                              levels_vec,
+                              y_label = NULL,
+                              show_legend = TRUE,
+                              caption = NULL,
+                              text_size = 8,
+                              label_size = 2,
+                              wrap_width = 25,
+                              bar_width = 0.7) {
+
+  rle_cols <- c(
+    "Least Concern",
+    "Near Threatened",
+    "Vulnerable",
+    "Endangered",
+    "Critically Endangered"
+  )
+
+  df_long <- data %>%
+    pivot_longer(
+      cols = all_of(rle_cols),
+      names_to  = "RLE",
+      values_to = "Count"
+    ) %>%
+    mutate(
+      RLE = factor(RLE, levels = rle_cols),
+      {{ group_var }} := factor({{ group_var }}, levels = levels_vec)
+    ) %>%
+    group_by({{ group_var }}) %>%
+    mutate(prop = Count / sum(Count)) %>%
+    ungroup()
+
+  p <- ggplot(df_long, aes(y = {{ group_var }}, x = prop, fill = RLE)) +
+    geom_bar(stat = "identity", position = "fill", width = bar_width) +
+    geom_text(aes(label = ifelse(Count == 0, "", Count)),
+              position = position_fill(vjust = 0.5),
+              size = label_size) +
+    scale_x_continuous(breaks = c(0, 0.5, 1),
+                       labels = scales::percent_format(accuracy = 1)) +
+    scale_fill_manual(values = c("#B4D79E", "grey70", "#FFD966", "#F6B26B", "#CC0000"),
+                      name = NULL) +
+    scale_y_discrete(labels = function(x) str_wrap(x, wrap_width)) +
+    labs(
+      x = "Percentage of ecosystem types",
+      y = y_label,          # ✅ IMPORTANT
+      caption = caption
+    ) +
+    theme_minimal(base_size = text_size) +
+    theme(
+      panel.grid.major.y = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      panel.grid.minor.x = element_blank(),
+      panel.grid.major.x = element_line(color = "grey80", size = 0.04),
+      axis.title.x = element_text(size = 6),
+      axis.title.y = element_text(size = 6),
+      legend.title = element_blank(),
+      legend.key.height = unit(0.35, "cm"),
+      legend.key.width  = unit(0.35, "cm")
+    )
+
+  if (!show_legend) {
+    p <- p + theme(legend.position = "none")
+  }
+
+  return(p)
+}
+
+```
+
+## 
+
+```{r, echo=FALSE}
+#| fig.height: 2
+#| out.width: 100%
+#| 
+GET_L2.realm <- plot_rle_bar_wide(GET_L2.count,
+                                  group_var  = Realm,
+                                  levels_vec = unique(GET_L2.ecosytems_count$Realm),
+                                  y_label    = "Realm",
+                                   bar_width  = 0.5)
+
+GET_L3.realm <- plot_rle_bar_wide(GET_L3.count,
+                                  group_var  = Realm,
+                                  levels_vec = unique(GET_L3.ecosytems_count$Realm),
+                                  y_label    = "Realm",
+                                   bar_width  = 0.5)
+
+
+# ---- Arrange plots side by side with common legend ----
+ggpubr::ggarrange(GET_L2.realm, GET_L3.realm, ncol = 2, labels = c("A", "B"),
+  font.label = list(size = 6), common.legend = TRUE, legend = "bottom")
+
+
+```
+
+## Global Ecosystem Typology Level 2
+
+```{r, echo=FALSE}
+#| fig.height: 3
+#| out.width: 100%
+ 
+all_L2 <- GET_L2.ecosytems_count %>%
+          pull(IUCN_GET_2025_L2) %>%
+          unique()
+
+Terr.GET_L2 <- GET_L2.ecosytems_count %>%
+               filter(Realm == "Terrestrial") %>%
+               plot_rle_bar_wide(group_var  = IUCN_GET_2025_L2,
+                                 levels_vec = all_L2,
+                                 y_label    = "Terrestrial",
+                                 bar_width  = 0.65)
+
+River.GET_L2 <- GET_L2.ecosytems_count %>%
+                filter(Realm == "River") %>%
+                plot_rle_bar_wide(group_var  = IUCN_GET_2025_L2,
+                                  levels_vec = all_L2,
+                                  y_label    = "River",
+                                  bar_width  = 0.15)
+
+Wetland.GET_L2 <- GET_L2.ecosytems_count %>%
+                  filter(Realm == "Wetland") %>%
+                  plot_rle_bar_wide(group_var  = IUCN_GET_2025_L2,
+                                    levels_vec = all_L2,
+                                    y_label    = "Wetland",
+                                    bar_width  = 0.3)
+
+Estuarine.GET_L2 <- GET_L2.ecosytems_count %>%
+                    filter(Realm == "Estuarine") %>%
+                    plot_rle_bar_wide(group_var  = IUCN_GET_2025_L2,
+                                      levels_vec = all_L2,
+                                      y_label    = "Estuarine",
+                                      bar_width  = 0.15)
+
+Marine.GET_L2 <- GET_L2.ecosytems_count %>%
+                 filter(Realm == "Marine") %>%
+                 plot_rle_bar_wide(group_var  = IUCN_GET_2025_L2,
+                                   levels_vec = all_L2,
+                                   y_label    = "Marine",
+                                   bar_width  = 0.4)
+
+ggpubr::ggarrange(Terr.GET_L2, Marine.GET_L2, Wetland.GET_L2, River.GET_L2, Estuarine.GET_L2, 
+                  ncol = 3, nrow = 2,
+                  common.legend = TRUE,
+                  legend = "bottom",
+                  heights = c(1, 1),
+                  align = "v", labels = c("A", "B", "C", "D", "E"),
+                  font.label = list(size = 6))   
+
+
+```
+
+## Global Ecosystem Typology Level 3
+
+```{r, echo=FALSE}
+#| out.width: 100%
+
+all_L3 <- GET_L3.ecosytems_count %>%
+          pull(IUCN_GET_2022_L3) %>%
+          unique()
+
+Terr.GET_L3 <- GET_L3.ecosytems_count %>%
+               filter(Realm == "Terrestrial") %>%
+               plot_rle_bar_wide(group_var  = IUCN_GET_2022_L3,
+                                 levels_vec = all_L3,
+                                 y_label    = "Terrestrial",
+                                 bar_width  = 0.55)
+
+River.GET_L3 <- GET_L3.ecosytems_count %>%
+                filter(Realm == "River") %>%
+                plot_rle_bar_wide(group_var  = IUCN_GET_2022_L3,
+                                  levels_vec = all_L3,
+                                  y_label    = "River",
+                                  bar_width  = 0.33)
+
+Wetland.GET_L3 <- GET_L3.ecosytems_count %>%
+                  filter(Realm == "Wetland") %>%
+                  plot_rle_bar_wide(group_var  = IUCN_GET_2022_L3,
+                                    levels_vec = all_L3,
+                                    y_label    = "Wetland",
+                                    bar_width  = 0.3)
+
+Estuarine.GET_L3 <- GET_L3.ecosytems_count %>%
+                    filter(Realm == "Estuarine") %>%
+                    plot_rle_bar_wide(group_var  = IUCN_GET_2022_L3,
+                                      levels_vec = all_L3,
+                                      y_label    = "Estuarine",
+                                      bar_width  = 0.18)
+
+Marine.GET_L3 <- GET_L3.ecosytems_count %>%
+                 filter(Realm == "Marine") %>%
+                 plot_rle_bar_wide(group_var  = IUCN_GET_2022_L3,
+                                   levels_vec = all_L3,
+                                   y_label    = "Marine",
+                                   bar_width  = 0.7)
+
+ggpubr::ggarrange(Terr.GET_L3, Marine.GET_L3, Wetland.GET_L3, River.GET_L3, Estuarine.GET_L3, 
+                  ncol = 3, nrow = 2,
+                  common.legend = TRUE,
+                  legend = "bottom",
+                  heights = c(2, 1.5), # <-- first row is taller
+                  align = "v", labels = c("A", "B", "C", "D", "E"),
+                  font.label = list(size = 6))   
+
+
+```

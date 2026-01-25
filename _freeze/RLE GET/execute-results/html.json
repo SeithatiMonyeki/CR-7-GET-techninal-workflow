@@ -1,0 +1,17 @@
+{
+  "hash": "8a353c35ea6bbec8b862e8a7bed4b070",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"7th Country Reporting\"\n---\n\n::: {.cell}\n\n```{.r .cell-code}\n#if (!requireNamespace(c(\"magrittr\",\"dplyr\", \"ggplot2\", \"ggthemes\"), quietly = TRUE)) {\n#  install.packages(c(\"magrittr\",\"dplyr\", \"ggplot2\", \"ggthemes\"))\n#}\n\n#devtools::install_github(\"SANBI-NBA/nbaR\", force = T)\n\nlibrary(nbaR)\nlibrary(dplyr)\nlibrary(tidyr)\n#library(stringi)\nlibrary(rlang)\nlibrary(gt)\nlibrary(ggplot2)\nlibrary(here)\n```\n:::\n\n\n\n::: scrolling\n\n\n::: {.cell}\n\n:::\n\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n\n\n\n## \n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](RLE-GET_files/figure-html/unnamed-chunk-4-1.png){width=100%}\n:::\n:::\n\n\n\n## Global Ecosystem Typology Level 2\n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](RLE-GET_files/figure-html/unnamed-chunk-5-1.png){width=100%}\n:::\n:::\n\n\n\n## Global Ecosystem Typology Level 3\n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](RLE-GET_files/figure-html/unnamed-chunk-6-1.png){width=100%}\n:::\n:::\n",
+    "supporting": [
+      "RLE-GET_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

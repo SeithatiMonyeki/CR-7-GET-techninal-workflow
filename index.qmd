@@ -1,348 +1,47 @@
 ---
-title: "7th Country Reporting"
+sidebar: false
+
+about: 
+  id: hero-heading
+  template: trestles
+  image: images/GET.jpg
+  links:
+    - icon: github
+      href: https://github.com/NBA2025
+    - icon: youtube
+      href: https://www.youtube.com/watch?v=K0XvdAFjCGU
+    - icon: save
+      href: "https://bgis.sanbi.org/Projects/Detail/1233/"
+    - icon: globe
+      href: https://biodiversityadvisor.sanbi.org/contentmanagement/index?guid=e7c11960-bb9b-4bac-a736-6c6db0e01b42
+    - icon: envelope
+      href: "mailto:a.skowno@sanbi.org.za; c.poole@sanbi.org.za"
+
+format: 
+  html:
+    embed-resources: true 
+    header-includes: |
+      <style>
+        /* Hide title in the margin */
+        .quarto-title-block .title {
+          display: none;
+        }
+      </style>
+      
+      <!-- Custom content added to the top of the page -->
+      <div style="background-color:#f0f0f0;padding:20px;text-align:center;">
+        <h1>Welcome to the National Biodiversity Assessment 2025</h1>
+        <h4>The status of South Africa's ecosystems and biodiversity</h4>
+      </div>
 ---
 
-```{r setup}
-#| echo: false
-#| message: false
-#| warning: false
+::: {#hero-heading}
 
-#if (!requireNamespace(c("magrittr","dplyr", "ggplot2", "ggthemes"), quietly = TRUE)) {
-#  install.packages(c("magrittr","dplyr", "ggplot2", "ggthemes"))
-#}
+South Africa is a special country, with diverse cultures, remarkable geological wealth and exceptional biodiversity, much of which is unique to our nation. With this rich endowment comes the responsibility and challenge of ensuring our species and ecosystems are conserved and used sustainably to the benefit of all South Africans and future generations. This biodiversity wealth gives our people tangible benefits like food, clean water, medicine and materials; it supports agricultural and fisheries production, and helps protect us from natural hazards like floods and droughts; and it provides the basis of a vibrant tourism industry while offering natural spaces for recreational and cultural activities.
 
-#devtools::install_github("SANBI-NBA/nbaR", force = T)
-
-library(nbaR)
-library(dplyr)
-library(tidyr)
-#library(stringi)
-library(rlang)
-library(gt)
-library(ggplot2)
-library(RColorBrewer)
-
-```
-
-
-
-::: scrolling
-```{r}
-
-EDD.GET_names <- read.csv("./data/EDD_GET levels names.csv") %>%
-                 mutate(Realm_GETL1 = case_when(Realm_GETL1 == "Terrestrial/Freshwater" ~ "Terrestrial", TRUE ~ Realm_GETL1)) %>%
-                 mutate(across(c(IUCN_GET_2025_L2, IUCN_GET_2022_L3, RLE_2025, EPL_2025), ~ case_when(.x %in% c("",
-                                                                                                                "#N/A", 
-                                                                                                                "#VALUE!", 
-                                                                                                                "Not Evaluated")  ~ NA_character_,
-                                                                                            TRUE ~ .x))) %>%
-       filter(!(is.na(IUCN_GET_2025_L2) | is.na(IUCN_GET_2022_L3) | is.na(RLE_2025))) %>%
-       filter(EPL_2025 %in% c("WP", "MP", "PP", "NP")) %>%
-       mutate(GET_L2.code_text = paste(IUCN_GET_2025_L2, GET_L2.text, sep = ": ")) %>%
-       mutate(GET_L3.code_text = paste(IUCN_GET_2022_L3, GET_L3.text, sep = ": ")) %>%
-       select(Realm_GETL1, Code, RLE_2025, EPL_2025, GET_L2.code_text, GET_L3.code_text)      
-
-```
 :::
 
-
-```{r}
-
-
-GET_L2.long <- EDD.GET_names %>%
-               group_by(Realm_GETL1, GET_L2.code_text, RLE_2025) %>%
-               summarise(Count = n_distinct(Code),.groups = "drop") %>%
-               mutate(RLE_2025 = factor(RLE_2025,levels = c("LC", "VU", "EN", "CR"),
-                                                 labels = c("Least Concern",
-                                                            "Vulnerable",
-                                                            "Endangered",
-                                                            "Critically Endangered")))
+Biodiversity is central to South Africa's national objectives of addressing poverty, inequality and unemployment, and supports increased economic growth and improved service delivery for all its citizens. Examining biodiversity in the context of social and economic change shows us that investing in ecological infrastructure is as important as investing in built infrastructure, and safeguarding the delivery of services from ecosystems can support service delivery from all spheres of government.
 
 
-GET_L3.long <- EDD.GET_names %>%
-               group_by(Realm_GETL1, GET_L3.code_text, RLE_2025) %>%
-               summarise(Count = n_distinct(Code),.groups = "drop") %>%
-               mutate(RLE_2025 = factor(RLE_2025,levels = c("LC", "VU", "EN", "CR"),
-                                                 labels = c("Least Concern",
-                                                            "Vulnerable",
-                                                            "Endangered",
-                                                            "Critically Endangered")))
-
-```
-
-
-```{r}
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(scales)
-library(grid)
-
-plot_rle_bar <- function(data,
-                         group_var,
-                         rle_var,
-                         count_var,
-                         chart = c("percent", "count"),
-                         show  = c("percent", "count", "none"),
-                         show_legend = TRUE,
-                         caption = NULL,
-                         text_size = 12,
-                         label_size = 14,
-                         wrap_width = 25,
-                         bar_width = 0.7) {
-
-  # ---- ARGUMENT MATCHING ----
-  chart <- match.arg(chart)
-  show  <- match.arg(show)
-
-  # ---- BAR POSITION TYPE ----
-  pos_type <- ifelse(chart == "percent", "fill", "stack")
-
-  # ---- BASE PLOT SETUP ----
-  p <- ggplot(data, aes(y    = {{ group_var }},
-                        x    = {{ count_var }},
-                        fill = factor({{ rle_var }},
-                                      levels = c("Least Concern",
-                                                 "Vulnerable",
-                                                 "Endangered",
-                                                 "Critically Endangered"))))
-
-  # ---- VERTICAL REFERENCE LINES (PERCENT ONLY) ----
-  if (chart == "percent") {
-    p <- p + geom_vline(xintercept = c(0, 0.5, 1),
-                        colour = "grey80",
-                        linewidth = 0.5)
-  }
-
-  # ---- BAR GEOMETRY ----
-  p <- p + geom_bar(stat     = "identity",
-                    position = pos_type,
-                    width    = bar_width)
-
-  # ---- REMOVE GAP BETWEEN BARS ----
-  p <- p + scale_y_discrete(expand = c(0, 0))
-
-  # ---- FILL COLOURS & LEGEND ----
-  p <- p + scale_fill_manual(values = c("#B4D79E", "yellow", "orange", "red"),
-                             name   = "Threat categories")
-
-  # ---- AXIS LABELS & CAPTION ----
-  p <- p + labs(x = ifelse(chart == "percent",
-                           "Percentage of ecosystem types",
-                           "Count of ecosystem types"),
-                y = NULL,
-                caption = caption)
-
-  # ---- THEME SETTINGS ----
-  p <- p +
-       theme_minimal() +
-       theme(text               = element_text(size = text_size),
-             legend.key.height  = unit(0.7, "cm"),
-             legend.key.width   = unit(0.6, "cm"),
-             plot.caption       = element_text(hjust = 0.2,
-                                               size = text_size - 2),
-             panel.grid.major.x = element_blank(),
-             panel.grid.minor.x = element_blank())
-
-  # ---- Y-AXIS LABEL WRAPPING & LEFT ALIGN TEXT ----
-  p <- p +
-       scale_y_discrete(labels = function(x) stringr::str_wrap(x,
-                                                               width = wrap_width)) +
-       theme(axis.text.y = element_text(hjust = 0,
-                                        margin = margin(r = 5)))
-
-  # ---- BAR LABELS ----
-  if (show == "percent" && chart == "percent") {
-    p <- p + geom_text(aes(label = scales::percent({{ count_var }} / sum({{ count_var }}),
-                                                  accuracy = 1)),
-                       position = position_fill(vjust = 0.5),
-                       size = label_size)
-  } else if (show == "count") {
-    p <- p + geom_text(aes(label = {{ count_var }}),
-                       position = position_fill(vjust = 0.5),
-                       size = label_size)
-  }
-
-  # ---- X-AXIS SCALE (PERCENT ONLY) ----
-  if (chart == "percent") {
-    p <- p + scale_x_continuous(breaks = c(0, 0.5, 1),
-                                labels = scales::percent_format(accuracy = 1))
-  }
-
-  # ---- SHOW OR HIDE LEGEND ----
-  if (!show_legend) {
-    p <- p + theme(legend.position = "none")
-  }
-
-  # ---- RETURN PLOT ----
-  return(p)
-}
-
-
-```
-
-
-```{r, echo=FALSE}
-
-
-# ---- PLOTS ----
-GetL2_plot <- GET_L2.long %>%
-  plot_rle_bar(group_var = Realm_GETL1,
-               rle_var   = RLE_2025,
-               count_var = Count,
-               chart     = "percent",
-               show      = "none",
-               show_legend = FALSE,
-               wrap_width = 25,
-               bar_width = 0.5)
-
-GetL2_plot
-
-GetL3_plot <- GET_L3.long %>%
-  plot_rle_bar(group_var = Realm_GETL1,
-               rle_var   = RLE_2025,
-               count_var = Count,
-               chart     = "percent",
-               show      = "none",
-               show_legend = FALSE,
-               wrap_width = 25,
-               bar_width = 0.5)
-
-plots <- ggpubr::ggarrange(
-  GetL2_plot,
-  GetL3_plot,
-  ncol = 2,
-  nrow = 1,
-  common.legend = TRUE,
-  legend = "bottom",
-  labels = c("A", "B"),
-  align = "hv"
-)
-
-plots
-```
-
-
-```{r, echo=FALSE}
-#| fig-width: 40
-#| fig-height: 60 
-
-# ---- PLOTS ----
-Terr.GetL2_plot <- GET_L2.long %>%
-  filter(Realm_GETL1 == "Terrestrial") %>%
-  plot_rle_bar(group_var = GET_L2.code_text,
-               rle_var   = RLE_2025,
-               count_var = Count,
-               chart     = "percent",
-               show      = "none",
-               show_legend = FALSE,
-               wrap_width = 25,
-               bar_width = 0.5)
-
-Terr.GetL3_plot <- GET_L3.long %>%
-  filter(Realm_GETL1 == "Terrestrial") %>%
-  plot_rle_bar(group_var = GET_L3.code_text,
-               rle_var   = RLE_2025,
-               count_var = Count,
-               chart     = "percent",
-               show      = "none",
-               show_legend = FALSE,
-               wrap_width = 25,
-               bar_width = 0.5)
-
-
-River.GetL2_plot <- GET_L2.long %>%
-  filter(Realm_GETL1 == "Freshwater_River") %>%
-  plot_rle_bar(group_var = GET_L2.code_text,
-               rle_var   = RLE_2025,
-               count_var = Count,
-               chart     = "percent",
-               show      = "none",
-               show_legend = FALSE,
-               wrap_width = 25,
-               bar_width = 0.2)
-
-River.GetL3_plot <- GET_L3.long %>%
-  filter(Realm_GETL1 == "Freshwater_River") %>%
-  plot_rle_bar(group_var = GET_L3.code_text,
-               rle_var   = RLE_2025,
-               count_var = Count,
-               chart     = "percent",
-               show      = "none",
-               show_legend = FALSE,
-               wrap_width = 25,
-               bar_width = 0.5)
-
-
-Wetland.GetL2_plot <- GET_L2.long %>%
-  filter(Realm_GETL1 == "Freshwater_Wetland") %>%
-  plot_rle_bar(group_var = GET_L2.code_text,
-               rle_var   = RLE_2025,
-               count_var = Count,
-               chart     = "percent",
-               show      = "none",
-               show_legend = FALSE,
-               wrap_width = 25,
-               bar_width = 0.5)
-
-Wetland.GetL3_plot <- GET_L3.long %>%
-  filter(Realm_GETL1 == "Freshwater_Wetland") %>%
-  plot_rle_bar(group_var = GET_L3.code_text,
-               rle_var   = RLE_2025,
-               count_var = Count,
-               chart     = "percent",
-               show      = "none",
-               show_legend = FALSE,
-               wrap_width = 25,
-               bar_width = 0.5)
-
-Estuarine.GetL2_plot <- GET_L2.long %>%
-  filter(Realm_GETL1 == "Estuarine") %>%
-  plot_rle_bar(group_var = GET_L2.code_text,
-               rle_var   = RLE_2025,
-               count_var = Count,
-               chart     = "percent",
-               show      = "none",
-               show_legend = FALSE,
-               wrap_width = 25,
-               bar_width = 0.2)
-
-Estuarine.GetL3_plot <- GET_L3.long %>%
-  filter(Realm_GETL1 == "Estuarine") %>%
-  plot_rle_bar(group_var = GET_L3.code_text,
-               rle_var   = RLE_2025,
-               count_var = Count,
-               chart     = "percent",
-               show      = "none",
-               show_legend = FALSE,
-               wrap_width = 25,
-               bar_width = 0.2)
-
-
-# ------------------------------------------------------------
-
-# ---- ARRANGE ----
-Terr_plots <- ggpubr::ggarrange(
-  Terr.GetL2_plot,
-  Terr.GetL3_plot,
-  Estuarine.GetL2_plot,
-  Estuarine.GetL3_plot,
-  River.GetL2_plot,
-  River.GetL3_plot,
-  Wetland.GetL2_plot,
-  Wetland.GetL3_plot,
-  ncol = 2,
-  nrow = 4,
-  common.legend = TRUE,
-  legend = "bottom",
-  labels = c("A", "B", "C", "D", "E", "F", "G", "H"),
-  align = "hv"
-)
-
-Terr_plots
-
-
-```
-
-
-
+The large number of terrestrial sites that qualify as global KBAs demonstrates the megadiverse wealth of South Africa. Of the approximately 357,198 km² that are confirmed South African Key Biodiversity Areas (KBA) sites, approximately 28% fall within formal protection. This demonstrates the potential of KBAs in the conservation framework, as KBAs that lack formal protection are positioned to be considered in protected area expansion strategies to ensure that South Africa’s protected areas footprint includes the most threatened species and ecosystems.

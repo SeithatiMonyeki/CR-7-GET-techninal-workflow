@@ -1,0 +1,17 @@
+{
+  "hash": "be2c8c79c1d6701fa3cdc2c36543d243",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Red List Index of ecosystems assessments\"\nsubtitle: \"Summary Findings\"\n\ndate: last-modified\ndate-format: DD-MM-YYYY\n---\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n\n\n\n\n## Global Ecosystem Typology at Level 2\n\n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 2 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 2 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 2 categories.](Findings_files/figure-html/fig-1-1.png){#fig-1 width=768}\n:::\n:::\n\n\n\n\n## Global Ecosystem Typology at Level 3\n\n\n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 3 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 3 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 3 categories.](Findings_files/figure-html/fig-2-1.png){#fig-2 width=816}\n:::\n:::\n\n\n\n\n\n\n## Red List of Ecosystem at the Global Ecosystem Typology by realm\n\n\n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n::: {.cell-output-display}\n![](Findings_files/figure-html/unnamed-chunk-3-1.png){width=100%}\n:::\n:::",
+    "supporting": [
+      "Findings_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
