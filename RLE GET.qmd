@@ -22,7 +22,7 @@ library(here)
 ```
 
 ::: scrolling
-```{r, echo=FALSE}
+```{r}
 
 EDD.GET_names <- read.csv("./data/EDD_GET levels names.csv") %>%
                  mutate(GET_L2.code_text = paste(IUCN_GET_2025_L2, GET_L2.text, sep = ": ")) %>%
@@ -39,7 +39,8 @@ EDD.GET_names <- read.csv("./data/EDD_GET levels names.csv") %>%
 ```
 :::
 
-```{r, echo=FALSE}
+::: scrolling
+```{r}
 # ----------
 # 1. GET_L3 
 # ----------
@@ -91,6 +92,7 @@ files <- list(GET_L2.count = GET_L2.count,
 purrr::iwalk(files, ~ writexl::write_xlsx(.x, paste0("./data/", .y, ".xlsx")))
 
 ```
+:::
 
 ```{r, echo=FALSE}
 library(dplyr)
@@ -171,10 +173,9 @@ plot_rle_bar_wide <- function(data,
 
 ## 
 
-```{r, echo=FALSE}
-#| fig.height: 2
-#| out.width: 100%
-#| 
+::: scrolling
+```{r}
+ 
 GET_L2.realm <- plot_rle_bar_wide(GET_L2.count,
                                   group_var  = Realm,
                                   levels_vec = unique(GET_L2.ecosytems_count$Realm),
@@ -187,17 +188,22 @@ GET_L3.realm <- plot_rle_bar_wide(GET_L3.count,
                                   y_label    = "Realm",
                                    bar_width  = 0.5)
 
+```
+:::
 
-# ---- Arrange plots side by side with common legend ----
+```{r, echo=FALSE}
+#| fig.height: 2
+#| out.width: 100%
+#| 
 ggpubr::ggarrange(GET_L2.realm, GET_L3.realm, ncol = 2, labels = c("A", "B"),
   font.label = list(size = 6), common.legend = TRUE, legend = "bottom")
-
-
 ```
+
 
 ## Global Ecosystem Typology Level 2
 
-```{r, echo=FALSE}
+::: scrolling
+```{r}
 #| fig.height: 3
 #| out.width: 100%
  
@@ -240,6 +246,13 @@ Marine.GET_L2 <- GET_L2.ecosytems_count %>%
                                    y_label    = "Marine",
                                    bar_width  = 0.4)
 
+```
+:::
+
+```{r, echo=FALSE}
+#| fig.height: 4
+#| out.width: 100%
+
 ggpubr::ggarrange(Terr.GET_L2, Marine.GET_L2, Wetland.GET_L2, River.GET_L2, Estuarine.GET_L2, 
                   ncol = 3, nrow = 2,
                   common.legend = TRUE,
@@ -248,13 +261,14 @@ ggpubr::ggarrange(Terr.GET_L2, Marine.GET_L2, Wetland.GET_L2, River.GET_L2, Estu
                   align = "v", labels = c("A", "B", "C", "D", "E"),
                   font.label = list(size = 6))   
 
-
 ```
+
+
 
 ## Global Ecosystem Typology Level 3
 
-```{r, echo=FALSE}
-#| out.width: 100%
+::: scrolling
+```{r}
 
 all_L3 <- GET_L3.ecosytems_count %>%
           pull(IUCN_GET_2022_L3) %>%
@@ -295,13 +309,20 @@ Marine.GET_L3 <- GET_L3.ecosytems_count %>%
                                    y_label    = "Marine",
                                    bar_width  = 0.7)
 
+```
+:::
+
+```{r, echo=FALSE}
+#| out.width: 100%
 ggpubr::ggarrange(Terr.GET_L3, Marine.GET_L3, Wetland.GET_L3, River.GET_L3, Estuarine.GET_L3, 
                   ncol = 3, nrow = 2,
                   common.legend = TRUE,
                   legend = "bottom",
                   heights = c(2, 1.5), # <-- first row is taller
                   align = "v", labels = c("A", "B", "C", "D", "E"),
-                  font.label = list(size = 6))   
+                  font.label = list(size = 6)) 
 
 
 ```
+
+:::

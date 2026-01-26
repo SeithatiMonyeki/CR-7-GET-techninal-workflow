@@ -156,16 +156,16 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link active" href="./RLIe GET.html" aria-current="page"> 
 <span class="menu-text">RLIe indicator</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./RLE GET.html"> 
 <span class="menu-text">RLE indicator</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Findings.html"> 
+<span class="menu-text">Summary Findings</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -212,7 +212,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">25-01-2026</p>
+      <p class="date">26-01-2026</p>
     </div>
   </div>
   
@@ -543,15 +543,12 @@ RLIE_t = 1- \frac{\sum_{i = 1}^{n} W_{C_{i,j}}}{W_{{CO}^n}}
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">RLIe_GET_L2 =</span> RLIe_GET_L2,</span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>              <span class="at">RLIe_GET_L3 =</span> RLIe_GET_L3,</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>              <span class="at">RLIe_all    =</span> RLIe_all)</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">iwalk</span>(files, <span class="sc">~</span> writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(.x, <span class="fu">paste0</span>(<span class="st">"./data/"</span>, .y, <span class="st">".xlsx"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>              <span class="at">RLIe_national =</span> RLIe_national,</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>              <span class="at">RLIe_all    =</span> RLIe_all)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">iwalk</span>(files, <span class="sc">~</span> writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(.x, <span class="fu">paste0</span>(<span class="st">"./data/"</span>, .y, <span class="st">".xlsx"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">GET L2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">GET L3</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="scrolling">
 <div class="cell plain">
 <div id="tbl-RLIes" class="cell plain quarto-float quarto-figure quarto-figure-center anchored">
@@ -561,23 +558,23 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 </figcaption>
 <div aria-describedby="tbl-RLIes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="abbfbyttmk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#abbfbyttmk table {
+<div id="zmnjmsmdsh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zmnjmsmdsh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#abbfbyttmk thead, #abbfbyttmk tbody, #abbfbyttmk tfoot, #abbfbyttmk tr, #abbfbyttmk td, #abbfbyttmk th {
+#zmnjmsmdsh thead, #zmnjmsmdsh tbody, #zmnjmsmdsh tfoot, #zmnjmsmdsh tr, #zmnjmsmdsh td, #zmnjmsmdsh th {
   border-style: none;
 }
 
-#abbfbyttmk p {
+#zmnjmsmdsh p {
   margin: 0;
   padding: 0;
 }
 
-#abbfbyttmk .gt_table {
+#zmnjmsmdsh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -603,12 +600,12 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-left-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_caption {
+#zmnjmsmdsh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#abbfbyttmk .gt_title {
+#zmnjmsmdsh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -620,7 +617,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-bottom-width: 0;
 }
 
-#abbfbyttmk .gt_subtitle {
+#zmnjmsmdsh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -632,7 +629,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-top-width: 0;
 }
 
-#abbfbyttmk .gt_heading {
+#zmnjmsmdsh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -644,13 +641,13 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-right-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_bottom_border {
+#zmnjmsmdsh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_col_headings {
+#zmnjmsmdsh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -665,7 +662,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-right-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_col_heading {
+#zmnjmsmdsh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -685,7 +682,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   overflow-x: hidden;
 }
 
-#abbfbyttmk .gt_column_spanner_outer {
+#zmnjmsmdsh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -697,15 +694,15 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   padding-right: 4px;
 }
 
-#abbfbyttmk .gt_column_spanner_outer:first-child {
+#zmnjmsmdsh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#abbfbyttmk .gt_column_spanner_outer:last-child {
+#zmnjmsmdsh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#abbfbyttmk .gt_column_spanner {
+#zmnjmsmdsh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -717,11 +714,11 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   width: 100%;
 }
 
-#abbfbyttmk .gt_spanner_row {
+#zmnjmsmdsh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#abbfbyttmk .gt_group_heading {
+#zmnjmsmdsh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -747,7 +744,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   text-align: left;
 }
 
-#abbfbyttmk .gt_empty_group_heading {
+#zmnjmsmdsh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -762,15 +759,15 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   vertical-align: middle;
 }
 
-#abbfbyttmk .gt_from_md > :first-child {
+#zmnjmsmdsh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#abbfbyttmk .gt_from_md > :last-child {
+#zmnjmsmdsh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#abbfbyttmk .gt_row {
+#zmnjmsmdsh .gt_row {
   padding-top: 12px;
   padding-bottom: 12px;
   padding-left: 5px;
@@ -789,7 +786,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   overflow-x: hidden;
 }
 
-#abbfbyttmk .gt_stub {
+#zmnjmsmdsh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -802,7 +799,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   padding-right: 5px;
 }
 
-#abbfbyttmk .gt_stub_row_group {
+#zmnjmsmdsh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -816,15 +813,15 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   vertical-align: top;
 }
 
-#abbfbyttmk .gt_row_group_first td {
+#zmnjmsmdsh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#abbfbyttmk .gt_row_group_first th {
+#zmnjmsmdsh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#abbfbyttmk .gt_summary_row {
+#zmnjmsmdsh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -834,16 +831,16 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   padding-right: 5px;
 }
 
-#abbfbyttmk .gt_first_summary_row {
+#zmnjmsmdsh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_first_summary_row.thick {
+#zmnjmsmdsh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#abbfbyttmk .gt_last_summary_row {
+#zmnjmsmdsh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -853,7 +850,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-bottom-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_grand_summary_row {
+#zmnjmsmdsh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -863,7 +860,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   padding-right: 5px;
 }
 
-#abbfbyttmk .gt_first_grand_summary_row {
+#zmnjmsmdsh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -873,7 +870,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-top-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_last_grand_summary_row_top {
+#zmnjmsmdsh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -883,11 +880,11 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-bottom-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_striped {
+#zmnjmsmdsh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#abbfbyttmk .gt_table_body {
+#zmnjmsmdsh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -896,7 +893,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-bottom-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_footnotes {
+#zmnjmsmdsh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -910,7 +907,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-right-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_footnote {
+#zmnjmsmdsh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -919,7 +916,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   padding-right: 5px;
 }
 
-#abbfbyttmk .gt_sourcenotes {
+#zmnjmsmdsh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -933,7 +930,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   border-right-color: #D3D3D3;
 }
 
-#abbfbyttmk .gt_sourcenote {
+#zmnjmsmdsh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -941,72 +938,72 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
   padding-right: 5px;
 }
 
-#abbfbyttmk .gt_left {
+#zmnjmsmdsh .gt_left {
   text-align: left;
 }
 
-#abbfbyttmk .gt_center {
+#zmnjmsmdsh .gt_center {
   text-align: center;
 }
 
-#abbfbyttmk .gt_right {
+#zmnjmsmdsh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#abbfbyttmk .gt_font_normal {
+#zmnjmsmdsh .gt_font_normal {
   font-weight: normal;
 }
 
-#abbfbyttmk .gt_font_bold {
+#zmnjmsmdsh .gt_font_bold {
   font-weight: bold;
 }
 
-#abbfbyttmk .gt_font_italic {
+#zmnjmsmdsh .gt_font_italic {
   font-style: italic;
 }
 
-#abbfbyttmk .gt_super {
+#zmnjmsmdsh .gt_super {
   font-size: 65%;
 }
 
-#abbfbyttmk .gt_footnote_marks {
+#zmnjmsmdsh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#abbfbyttmk .gt_asterisk {
+#zmnjmsmdsh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#abbfbyttmk .gt_indent_1 {
+#zmnjmsmdsh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#abbfbyttmk .gt_indent_2 {
+#zmnjmsmdsh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#abbfbyttmk .gt_indent_3 {
+#zmnjmsmdsh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#abbfbyttmk .gt_indent_4 {
+#zmnjmsmdsh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#abbfbyttmk .gt_indent_5 {
+#zmnjmsmdsh .gt_indent_5 {
   text-indent: 25px;
 }
 
-#abbfbyttmk .katex-display {
+#zmnjmsmdsh .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#abbfbyttmk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zmnjmsmdsh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1044,7 +1041,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">10</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5600000</td>
 <td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.3400000</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7800000</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8000000</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
 </tr>
@@ -1165,7 +1162,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">133</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6481203</td>
 <td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5894737</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7082707</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7067669</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
 </tr>
@@ -1175,8 +1172,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">244</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">133</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6330827</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5714286</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6932331</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5729323</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6977444</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
 </tr>
@@ -1186,8 +1183,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">244</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">133</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6330827</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5714286</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6947368</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5699248</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6962406</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
 </tr>
@@ -1197,8 +1194,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">244</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">133</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6330827</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5714286</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6962406</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5684211</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6947368</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
 </tr>
@@ -1209,7 +1206,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">180</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8700000</td>
 <td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8333333</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9055556</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9044444</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
 </tr>
@@ -1219,7 +1216,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">139</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">180</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8455556</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8044444</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8055556</td>
 <td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8844444</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
@@ -1230,8 +1227,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">145</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">180</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8388889</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7977778</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8788889</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7999722</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8766667</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
 </tr>
@@ -1241,8 +1238,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">149</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">180</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8344444</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7944444</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8722222</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7933333</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8733333</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
 </tr>
@@ -1263,7 +1260,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">37</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">92</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9195652</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8717391</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8695652</td>
 <td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9630435</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
@@ -1274,7 +1271,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">37</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">92</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9195652</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8695652</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8673913</td>
 <td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9630435</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
@@ -1286,7 +1283,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">92</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9195652</td>
 <td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8695652</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9652174</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9630435</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L2.count</td>
 </tr>
@@ -1340,7 +1337,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">20</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">44</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9090909</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8272727</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8363636</td>
 <td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9727273</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
@@ -1472,8 +1469,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">234</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">132</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6454545</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5848485</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7075758</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5833333</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7060606</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1494,8 +1491,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">244</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">132</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6303030</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5651515</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6924242</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5681818</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6909091</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1505,8 +1502,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">244</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">132</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6303030</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5666667</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6924242</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.5696970</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.6909091</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1527,7 +1524,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">11</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">38</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9421053</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8842105</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8789474</td>
 <td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9894737</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
@@ -1538,7 +1535,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">14</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">38</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9263158</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8578947</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8631579</td>
 <td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9842105</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
@@ -1561,7 +1558,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">67</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8507463</td>
 <td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7850746</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9104478</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9134328</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1571,8 +1568,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">62</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">67</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8149254</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7432836</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8835821</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7462687</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8805970</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1583,7 +1580,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">67</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8059701</td>
 <td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7343284</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8716418</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8746269</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1593,7 +1590,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">65</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">67</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8059701</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7343284</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7373134</td>
 <td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8746269</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
@@ -1605,7 +1602,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">75</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8506667</td>
 <td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7920000</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9066667</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9040000</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1615,8 +1612,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">66</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">75</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8240000</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7573333</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8853333</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7600000</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8880000</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1626,7 +1623,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">66</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">75</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8240000</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7600000</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7573333</td>
 <td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8853333</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
@@ -1638,7 +1635,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">75</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8133333</td>
 <td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7493333</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8746667</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8773333</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1704,7 +1701,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">63</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9079365</td>
 <td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8444444</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9619048</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9650794</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1725,8 +1722,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">29</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">63</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9079365</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8443651</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9619048</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8412698</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.9650794</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">GET_L3.count</td>
 </tr>
@@ -1780,8 +1777,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">413</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">463</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8215983</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7935205</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8488121</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7943844</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8479482</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Aggregate</td>
 </tr>
@@ -1791,8 +1788,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">466</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">463</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7987041</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7706263</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8263607</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7697624</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8276458</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Aggregate</td>
 </tr>
@@ -1802,8 +1799,8 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_weight" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">472</td>
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">463</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7961123</td>
-<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7658747</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8242009</td>
+<td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7671706</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8241901</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Aggregate</td>
 </tr>
@@ -1814,7 +1811,7 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 <td class="gt_row gt_right" headers="total_count" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">463</td>
 <td class="gt_row gt_right" headers="RLIE" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7943844</td>
 <td class="gt_row gt_right" headers="lower" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.7654428</td>
-<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8224622</td>
+<td class="gt_row gt_right" headers="upper" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">0.8220302</td>
 <td class="gt_row gt_left" headers="criteria" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Overall</td>
 <td class="gt_row gt_left" headers="Analysis_Level" style="text-align: center; border-top-width: 1px; border-top-style: dotted; border-top-color: gray50; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: grey; border-left-width: 1px; border-left-style: solid; border-left-color: transparent; border-right-width: 1px; border-right-style: solid; border-right-color: transparent;">Aggregate</td>
 </tr>
@@ -1825,45 +1822,6 @@ Table&nbsp;1<strong>:</strong> Summay table of the RLIe at GET level for 2014, 2
 </div>
 </div>
 </figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="scrolling">
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="RLIe-GET_files/figure-html/fig-1-1.png" class="img-fluid figure-img" width="768">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<strong>Figure</strong>&nbsp;1<strong>:</strong> Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 2 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 2 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 2 categories.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<div class="scrolling">
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="RLIe-GET_files/figure-html/fig-2-1.png" class="img-fluid figure-img" width="816">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<strong>Figure</strong>&nbsp;2<strong>:</strong> Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 3 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 3 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 3 categories.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>

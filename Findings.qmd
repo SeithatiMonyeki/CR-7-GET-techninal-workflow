@@ -37,9 +37,17 @@ GET_L2.ecosytems_count <- readxl::read_xlsx("./data/GET_L2.ecosytems_count.xlsx"
 GET_L3.ecosytems_count <- readxl::read_xlsx("./data/GET_L3.ecosytems_count.xlsx")
 ```
 
+## Overview
+
+South Africa is among the first countries to apply the Red List Index of Ecosystems (RLIe). To date, national trends have been assessed only for terrestrial ecosystems, with plans to expand the assessment in the near future to include ecosystems across all realms. In parallel with the RLIe application, South Africa has made substantial progress in crosswalking its national ecosystem classification across realms to the IUCN Global Ecosystem Typology (GET). The IUCN Global Ecosystem Typology is a global, hierarchical classification system designed to consistently describe ecosystems, thereby enabling comparability of ecosystem assessments across regions, realms, and spatial scales.
+
+Many of South Africa’s ecosystems are nested within higher-level functional units of the GET, specifically Level 2 (functional biomes) and Level 3 (ecosystem functional groups). These levels were used as the primary analytical and reporting units to ensure a consistent application of the RLIe indicator across terrestrial ecosystems. In total, South Africa’s 463 terrestrial ecosystem types were matched to five GET Level 2 functional biomes, while the crosswalk to GET Level 3 resulted in 11 ecosystem functional groups.
+
+The Red List Index of Ecosystems (RLIe) was calculated at both GET Level 2 and GET Level 3 across four assessment periods (2014, 2018, 2022, and 2024). The index ranges from 0 to 1, where a value of 0 indicates that all ecosystems within a given functional biome or ecosystem functional group have collapsed, and a value of 1 indicates that all ecosystems are classified as Least Concern. Importantly, an RLIe value of 1 does not imply the absence of threats; rather, it reflects that the cumulative impacts of ongoing pressures have not yet reached the thresholds required to trigger threat categories under the IUCN Red List of Ecosystems criteria.
+
 ## Global Ecosystem Typology at Level 2
 
-```{r, echo=FALSE, fig.width=8, fig.height=4.5}
+```{r, echo=FALSE, fig.width=9, fig.height=4.5}
 #| label: fig-1
 #| fig-cap: "Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 2 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 2 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 2 categories."
 
@@ -100,10 +108,14 @@ ggsave(filename = "GET_L2.plot.png",
        dpi = 300)
 ```
 
+A pattern broadly consistent with biome-level trends reported in the NBA 2025 is also evident across the GET Level 2 functional biomes. T2: Temperate–boreal forests and woodlands have maintained a high level of resilience to pressures, with an RLIe score of 1.0 across all four assessment periods. This stability indicates no detectable deterioration at this level, as all four ecosystems within this functional biome remained classified as Least Concern throughout the assessment timeframe. However, this does not imply an absence of underlying pressures.
+
+Ecosystems classified within T5: Deserts and semi-deserts and T1: Tropical–subtropical forests show modest declines in RLIe, reflecting incremental increases in ecosystem risk rather than abrupt shifts into higher threat categories. In contrast, among the five functional biomes assessed, MT2: Supralittoral coastal systems exhibit the most pronounced decline, indicating increasing vulnerability over the assessment period.
+
 ## Global Ecosystem Typology at Level 3
 
 
-```{r, echo=FALSE, fig.width=8.5, fig.height=4.5}
+```{r, echo=FALSE, fig.width=10, fig.height=4.5}
 #| label: fig-2
 #| fig-cap: "Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 3 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 3 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 3 categories."
 #| 
@@ -166,7 +178,9 @@ ggsave(filename = "GET_L3.plot.png",
        dpi = 300)
 ```
 
+At IUCN GET Level 3, ecosystem functional groups show a mixed pattern of resilience and vulnerability across assessment periods. Three of the eleven groups (T2.4 Warm temperate laurophyll forests, T3.1 Seasonally dry tropical shrublands, and T5.1 Semi-desert steppes) maintained an RLIe score of 1.0 throughout, indicating minimal detectable impacts from anthropogenic land-use pressures. In contrast, MT2.1 Coastal shrublands and grasslands showed the sharpest decline between 2014 and 2018 (to 0.6) before stabilising, while T3.2 Seasonally dry temperate heaths and shrublands declined prior to 2014 and remained stable thereafter at the same level. 
 
+Overall, the aggregate RLIe declined slightly from 0.82 to 0.79 between 2014 and 2024, signalling a gradual increase in ecosystem threat. These contrasting trajectories highlight the need for targeted, ecosystem-specific interventions that address the dominant drivers of change shaping national ecosystem risk.
 
 ## Red List of Ecosystem at the Global Ecosystem Typology by realm
 
