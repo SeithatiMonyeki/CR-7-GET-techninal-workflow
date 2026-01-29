@@ -44,3 +44,9 @@ html, body {
   overflow-y: auto;
 }
 
+
+/* Or target all captions */
+figcaption {
+  line-height: 1.5;
+  font-size: 0.85em;  /* 85% of parent font size */
+}

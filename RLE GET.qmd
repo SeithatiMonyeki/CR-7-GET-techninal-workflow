@@ -52,7 +52,12 @@ GET_L2.count <- EDD.GET_names %>%
                 tidyr::pivot_wider(names_from = RLE_2025,
                                    values_from = n,
                                    values_fill = 0) %>%
-                mutate(Total = rowSums(select(., -Realm)))
+                mutate(Total = rowSums(select(., -Realm)))  %>%
+                rowwise() %>%
+                mutate(Threat_total = sum(across(c(`Vulnerable`,`Endangered`, `Critically Endangered`))),
+                       Threat_prc = round((Threat_total/Total) * 100,0)) %>%
+                ungroup
+
 
 #  -------2. Number of Ecosystem Types (GET_L5/6) per GET_L2 per Threat Status within each Realm -------
 GET_L2.ecosytems_count <- EDD.GET_names %>%
@@ -73,7 +78,12 @@ GET_L3.count <- EDD.GET_names %>%
                 tidyr::pivot_wider(names_from = RLE_2025,
                                    values_from = n,
                                    values_fill = 0) %>%
-                mutate(Total = rowSums(select(., -Realm)))
+                mutate(Total = rowSums(select(., -Realm))) %>%
+                rowwise() %>%
+                mutate(Threat_total = sum(across(c(`Vulnerable`,`Endangered`, `Critically Endangered`))),
+                       Threat_prc = round((Threat_total/Total) * 100,0)) %>%
+                ungroup
+
 
 
 #  -------2. Number of Ecosystem Types (GET_L5/6) per GET_L2 per Threat Status within each Realm -------

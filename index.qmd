@@ -30,17 +30,15 @@ format:
       
       <!-- Custom content added to the top of the page -->
       <div style="background-color:#f0f0f0;padding:20px;text-align:center;">
-        <h1> Technical Report for ecosystem headline indicator 2025</h1>
+        <h1> Technical Report for ecosystem headline indicators</h1>
         <h4>7th Country Reporting (South Africa)</h4>
       </div>
 ---
 
 ::: {#hero-heading}
-
 During the development of the United Nations Sustainable Development Goals (SDGs), a global call was made for biodiversity conservation and management interventions to be informed by comprehensive ecosystem assessments. In response to this mandate, several ecosystem headline indicators were developed, including the Red List of Ecosystems (RLE) and the Red List Index of Ecosystems (RLIe), which have since been adopted as key pillars of the Post-2020 Global Biodiversity Framework of the Convention on Biological Diversity (CBD).
 
 The implementation of this global mandate relies on a standardised, spatially explicit framework underpinned by consistent ecosystem typologies and terminology, enabling comparable assessment, reporting, and tracking of ecosystem status across spatial scales. To meet these requirements, the IUCN Commission on Ecosystem Management developed the Global Ecosystem Typology (GET) as a unifying classification system for national and global ecosystem reporting.
-
 :::
 
 South Africa, as a signatory to the Convention on Biological Diversity, is among the first countries to crosswalk its national ecosystem classification to the IUCN Global Ecosystem Typology. South Africa’s ecosystems are nested within higher-level functional units of the GET, specifically Level 2 (functional biomes) and Level 3 (ecosystem functional groups), which were used as the reporting and analytical units for the application of the Red List Index of Ecosystems indicator.
