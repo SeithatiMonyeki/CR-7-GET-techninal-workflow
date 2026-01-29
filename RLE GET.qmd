@@ -42,16 +42,17 @@ EDD.GET_names <- read.csv("./data/EDD_GET levels names.csv") %>%
 ::: scrolling
 ```{r}
 # ----------
-# 1. GET_L3 
+# 1. GET_L2 
 # ----------
 
-#  -------1. Number of GET Level 2 per Realm per Threat Status -------
+#  -------1. Distinct IUCN GET 2025 Level 2 functional groups occur in each Realm, by RLE 2025 category -------
 GET_L2.count <- EDD.GET_names %>%
-                group_by(Realm, RLE_2025) %>%
-                summarise(Count = n_distinct(GET_L2.code_text), .groups = "drop")  %>%
-                           tidyr::pivot_wider(names_from = RLE_2025,
-                                       values_from = Count,
-                                       values_fill = 0) 
+                distinct(IUCN_GET_2025_L2, Realm, RLE_2025) %>%
+                count(Realm, RLE_2025) %>%
+                tidyr::pivot_wider(names_from = RLE_2025,
+                                   values_from = n,
+                                   values_fill = 0) %>%
+                mutate(Total = rowSums(select(., -Realm)))
 
 #  -------2. Number of Ecosystem Types (GET_L5/6) per GET_L2 per Threat Status within each Realm -------
 GET_L2.ecosytems_count <- EDD.GET_names %>%
@@ -65,14 +66,14 @@ GET_L2.ecosytems_count <- EDD.GET_names %>%
 # 2. GET_L3 
 # ----------
 
-#  -------1. Number of GET Level 2 per Realm per Threat Status -------
+#  -------1. Distinct IUCN GET 2025 Level 2 functional groups occur in each Realm, by RLE 2025 category -------
 GET_L3.count <- EDD.GET_names %>%
-                group_by(Realm, RLE_2025) %>%
-                summarise(Count = n_distinct(GET_L3.code_text), .groups = "drop")%>%
-                           tidyr::pivot_wider(names_from = RLE_2025,
-                                       values_from = Count,
-                                       values_fill = 0) 
-
+                distinct(IUCN_GET_2022_L3, Realm, RLE_2025) %>%
+                count(Realm, RLE_2025) %>%
+                tidyr::pivot_wider(names_from = RLE_2025,
+                                   values_from = n,
+                                   values_fill = 0) %>%
+                mutate(Total = rowSums(select(., -Realm)))
 
 
 #  -------2. Number of Ecosystem Types (GET_L5/6) per GET_L2 per Threat Status within each Realm -------
@@ -141,7 +142,7 @@ plot_rle_bar_wide <- function(data,
               size = label_size) +
     scale_x_continuous(breaks = c(0, 0.5, 1),
                        labels = scales::percent_format(accuracy = 1)) +
-    scale_fill_manual(values = c("#B4D79E", "grey70", "#FFD966", "#F6B26B", "#CC0000"),
+    scale_fill_manual(values = c("#B4D79E", "#CCE226", "#FFD966", "#F6B26B", "#CC0000"),
                       name = NULL) +
     scale_y_discrete(labels = function(x) str_wrap(x, wrap_width)) +
     labs(
@@ -198,7 +199,6 @@ GET_L3.realm <- plot_rle_bar_wide(GET_L3.count,
 ggpubr::ggarrange(GET_L2.realm, GET_L3.realm, ncol = 2, labels = c("A", "B"),
   font.label = list(size = 6), common.legend = TRUE, legend = "bottom")
 ```
-
 
 ## Global Ecosystem Typology Level 2
 
@@ -262,8 +262,6 @@ ggpubr::ggarrange(Terr.GET_L2, Marine.GET_L2, Wetland.GET_L2, River.GET_L2, Estu
                   font.label = list(size = 6))   
 
 ```
-
-
 
 ## Global Ecosystem Typology Level 3
 

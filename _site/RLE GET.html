@@ -215,54 +215,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="scrolling">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. GET_L3 </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. GET_L2 </span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  -------1. Number of GET Level 2 per Realm per Threat Status -------</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  -------1. Distinct IUCN GET 2025 Level 2 functional groups occur in each Realm, by RLE 2025 category -------</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>GET_L2.count <span class="ot">&lt;-</span> EDD.GET_names <span class="sc">%&gt;%</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">group_by</span>(Realm, RLE_2025) <span class="sc">%&gt;%</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n_distinct</span>(GET_L2.code_text), <span class="at">.groups =</span> <span class="st">"drop"</span>)  <span class="sc">%&gt;%</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                           tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> RLE_2025,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_from =</span> Count,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_fill =</span> <span class="dv">0</span>) </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  -------2. Number of Ecosystem Types (GET_L5/6) per GET_L2 per Threat Status within each Realm -------</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>GET_L2.ecosytems_count <span class="ot">&lt;-</span> EDD.GET_names <span class="sc">%&gt;%</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">group_by</span>(Realm, IUCN_GET_2025_L2, GET_L2.code_text, RLE_2025) <span class="sc">%&gt;%</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n_distinct</span>(EcosystemType_GETLevel5_6), <span class="at">.groups =</span> <span class="st">"drop"</span>)  <span class="sc">%&gt;%</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                           tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> RLE_2025,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_from =</span> Count,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_fill =</span> <span class="dv">0</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. GET_L3 </span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#  -------1. Number of GET Level 2 per Realm per Threat Status -------</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>GET_L3.count <span class="ot">&lt;-</span> EDD.GET_names <span class="sc">%&gt;%</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                <span class="fu">group_by</span>(Realm, RLE_2025) <span class="sc">%&gt;%</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n_distinct</span>(GET_L3.code_text), <span class="at">.groups =</span> <span class="st">"drop"</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                           tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> RLE_2025,</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_from =</span> Count,</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_fill =</span> <span class="dv">0</span>) </span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">distinct</span>(IUCN_GET_2025_L2, Realm, RLE_2025) <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">count</span>(Realm, RLE_2025) <span class="sc">%&gt;%</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> RLE_2025,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values_from =</span> n,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mutate</span>(<span class="at">Total =</span> <span class="fu">rowSums</span>(<span class="fu">select</span>(., <span class="sc">-</span>Realm)))</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  -------2. Number of Ecosystem Types (GET_L5/6) per GET_L2 per Threat Status within each Realm -------</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>GET_L2.ecosytems_count <span class="ot">&lt;-</span> EDD.GET_names <span class="sc">%&gt;%</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">group_by</span>(Realm, IUCN_GET_2025_L2, GET_L2.code_text, RLE_2025) <span class="sc">%&gt;%</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n_distinct</span>(EcosystemType_GETLevel5_6), <span class="at">.groups =</span> <span class="st">"drop"</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                           tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> RLE_2025,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_from =</span> Count,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_fill =</span> <span class="dv">0</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. GET_L3 </span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#  -------1. Distinct IUCN GET 2025 Level 2 functional groups occur in each Realm, by RLE 2025 category -------</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>GET_L3.count <span class="ot">&lt;-</span> EDD.GET_names <span class="sc">%&gt;%</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                <span class="fu">distinct</span>(IUCN_GET_2022_L3, Realm, RLE_2025) <span class="sc">%&gt;%</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                <span class="fu">count</span>(Realm, RLE_2025) <span class="sc">%&gt;%</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> RLE_2025,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values_from =</span> n,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mutate</span>(<span class="at">Total =</span> <span class="fu">rowSums</span>(<span class="fu">select</span>(., <span class="sc">-</span>Realm)))</span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co">#  -------2. Number of Ecosystem Types (GET_L5/6) per GET_L2 per Threat Status within each Realm -------</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>GET_L3.ecosytems_count <span class="ot">&lt;-</span> EDD.GET_names <span class="sc">%&gt;%</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">group_by</span>(Realm, IUCN_GET_2022_L3, GET_L3.code_text, RLE_2025) <span class="sc">%&gt;%</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n_distinct</span>(EcosystemType_GETLevel5_6), <span class="at">.groups =</span> <span class="st">"drop"</span>)  <span class="sc">%&gt;%</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                           tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> RLE_2025,</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_from =</span> Count,</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_fill =</span> <span class="dv">0</span>)</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co">#  -------2. Number of Ecosystem Types (GET_L5/6) per GET_L2 per Threat Status within each Realm -------</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>GET_L3.ecosytems_count <span class="ot">&lt;-</span> EDD.GET_names <span class="sc">%&gt;%</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">group_by</span>(Realm, IUCN_GET_2022_L3, GET_L3.code_text, RLE_2025) <span class="sc">%&gt;%</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n_distinct</span>(EcosystemType_GETLevel5_6), <span class="at">.groups =</span> <span class="st">"drop"</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                           tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> RLE_2025,</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_from =</span> Count,</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">values_fill =</span> <span class="dv">0</span>)</span>
 <span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">GET_L2.count =</span> GET_L2.count,</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>              <span class="at">GET_L3.count =</span> GET_L3.count,</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>              <span class="at">GET_L2.ecosytems_count =</span> GET_L2.ecosytems_count,</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>              <span class="at">GET_L3.ecosytems_count =</span> GET_L3.ecosytems_count)</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">iwalk</span>(files, <span class="sc">~</span> writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(.x, <span class="fu">paste0</span>(<span class="st">"./data/"</span>, .y, <span class="st">".xlsx"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">GET_L2.count =</span> GET_L2.count,</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>              <span class="at">GET_L3.count =</span> GET_L3.count,</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>              <span class="at">GET_L2.ecosytems_count =</span> GET_L2.ecosytems_count,</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>              <span class="at">GET_L3.ecosytems_count =</span> GET_L3.ecosytems_count)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">iwalk</span>(files, <span class="sc">~</span> writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(.x, <span class="fu">paste0</span>(<span class="st">"./data/"</span>, .y, <span class="st">".xlsx"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <section id="section" class="level2">
