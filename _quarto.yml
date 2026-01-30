@@ -16,6 +16,8 @@ website:
 
 format:
   html:
+    self-contained: true
+    embed-resources: true
     linestretch: 1.9
     toc-title: "On this page"
     toc: true
@@ -23,6 +25,7 @@ format:
     code-copy: true
     code-overflow: wrap
     css: styles.css
+
     
     theme:
       light: cosmo
