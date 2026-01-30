@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Red List Index of ecosystems assessments – CR-7 GET technical workflow</title>
+<title>Mermaid – CR-7 GET technical workflow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,6 +66,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -101,7 +104,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">RLE indicator</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Findings.html" aria-current="page"> 
+    <a class="nav-link" href="./Findings.html"> 
 <span class="menu-text">Summary Findings</span></a>
   </li>  
 </ul>
@@ -115,25 +118,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
-  <li><a href="#global-ecosystem-typology-at-level-2" id="toc-global-ecosystem-typology-at-level-2" class="nav-link" data-scroll-target="#global-ecosystem-typology-at-level-2">Global Ecosystem Typology at Level 2</a></li>
-  <li><a href="#global-ecosystem-typology-at-level-3" id="toc-global-ecosystem-typology-at-level-3" class="nav-link" data-scroll-target="#global-ecosystem-typology-at-level-3">Global Ecosystem Typology at Level 3</a></li>
-  <li><a href="#red-list-of-ecosystem-at-the-global-ecosystem-typology-by-realm" id="toc-red-list-of-ecosystem-at-the-global-ecosystem-typology-by-realm" class="nav-link" data-scroll-target="#red-list-of-ecosystem-at-the-global-ecosystem-typology-by-realm">Red List of Ecosystem at the Global Ecosystem Typology by realm</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Red List Index of ecosystems assessments</h1>
-<p class="subtitle lead">Summary Findings</p>
+<h1 class="title">Mermaid</h1>
 </div>
 
 
@@ -141,12 +134,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">30-01-2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -156,71 +143,99 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="background" class="level2">
-<h2 class="anchored" data-anchor-id="background">Background</h2>
-<p>South Africa is among the first countries to implement the Red List Index of Ecosystems <a href="https://nba.sanbi.org.za/content/terrestrial/ter_ets.html">(Monyeki &amp; Skowno, 2025)</a>, a standardized indicator that tracks temporal trends in ecosystem condition and threat levels. This index builds on ecosystem threat status assessments conducted using the <a href="https://nba.sanbi.org.za/content/terrestrial/ter_ets.html">IUCN Red List of Ecosystems framework</a>, enabling consistent and repeatable monitoring of ecosystem deterioration over time. Ecosystem threat status—the globally recognized Red List of Ecosystems headline indicator—measures the extent to which ecosystems are losing vital aspects of their structure, function, or composition, or conversely, the degree to which they remain intact.</p>
-<p>To date, national trends have been assessed only for terrestrial ecosystems, with plans to expand the assessment scope in the near future to include ecosystems across all realms. In parallel with the RLIe application, South Africa has made substantial progress in crosswalking its national ecosystem classification across realms to the IUCN Global Ecosystem Typology <a href="South African National Ecosystem Classification System Handbook">(Dayaram et al., 2021)</a>. The IUCN Global Ecosystem Typology is a global, hierarchical classification system designed to consistently describe ecosystems, thereby enabling comparability of ecosystem assessments across regions, realms, and spatial scales <a href="https://portals.iucn.org/library/node/49250">(Keith et al., 2020)</a>.</p>
-<p>Many of South Africa’s ecosystems are nested within higher-level functional units of the IUCN GET, specifically Level 2 (functional biomes) and Level 3 (ecosystem functional groups). These levels were used as the primary analytical and reporting units to ensure a consistent application of the RLIe indicator across terrestrial ecosystems. In total, South Africa’s 463 terrestrial ecosystem types were matched to five IUCN GET Level 2 functional biomes, while the crosswalk to GET Level 3 resulted in 11 ecosystem functional groups.</p>
-<p>The Red List Index of Ecosystems (RLIe) was calculated at both IUCN Global Ecosystem Typology (GET) Level 2 and Level 3 across four assessment periods (2014, 2018, 2022, and 2024). The index ranges from 0 to 1, where a value of 0 indicates that all ecosystems within a given functional biome or ecosystem functional group have collapsed, and a value of 1 indicates that all ecosystems within the functional biome or ecosystem functional group are classified as Least Concern. Importantly, an RLIe value of 1 does not imply the absence of threats; rather, it indicates that the cumulative impacts of ongoing pressures have not yet reached the thresholds required to trigger threat categories under the IUCN Red List of Ecosystems criteria.</p>
-</section>
-<section id="global-ecosystem-typology-at-level-2" class="level2">
-<h2 class="anchored" data-anchor-id="global-ecosystem-typology-at-level-2">Global Ecosystem Typology at Level 2</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-mermaidGET" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="Findings_files/figure-html/fig-1-1.png" class="img-fluid figure-img" width="864">
+<div aria-describedby="fig-mermaidGET-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-mermaidGET">%%{init: {'theme': 'base', 'themeVariables': {'fontSize':'12px','primaryColor': '#f0fff0'}}}%%
+
+flowchart TB
+
+  A[Realms in South Africa] --&gt; B1(Terrestrial)
+  A --&gt; B2(River)
+  A --&gt; B3(Wetlands)
+  A --&gt; B4(Estuarine)
+  A --&gt; B5(Marine)
+  B1 --&gt; C1[MT2]
+  B1 --&gt; C2[T1] 
+  B1 --&gt; C3[T2] 
+  B1 --&gt; C4[Functional biomes]  
+  B1 --&gt; C4[T3] 
+  B1 --&gt; C5[T4]   
+  B1 --&gt; C6[T5]
+  
+  B2 --&gt; D1[F1] 
+  
+  B3 --&gt; E1[F2]
+  B3 --&gt; E2[TF1] 
+  
+  B4 --&gt; F1[FM1] 
+  
+  B5 --&gt; H1[M1]
+  B5 --&gt; H2[M2] 
+  B5 --&gt; H3[TM1]  
+  
+  
+  C1 &amp; C2 &amp; C3 &amp; C4 &amp; C5 &amp; C6 --&gt; GROUP["⎱ All Terrestrial ⎰"]
+  
+  GROUP --&gt; I1[MT2.1]
+  GROUP --&gt; I2[T1.2]  
+  GROUP --&gt; I3[T2.4]
+  GROUP --&gt; I4[T3.1]
+  GROUP --&gt; I5[T3.2]
+  GROUP --&gt; I6[T4.1]  
+  GROUP --&gt; I7[T4.2]
+  
+  
+
+
+</pre>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<strong>Figure</strong>&nbsp;1<strong>:</strong> Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 2 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 2 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 2 categories.
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mermaidGET-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<strong>Figure</strong>&nbsp;1<strong>:</strong> Workflow generated to estimate the proportion of ecosystem type in each of the Habitat Modification land cover change classes.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The IUCN Global Ecosystem Typology (GET) Level 2 functional biomes reveal patterns broadly consistent with national biome-level trends reported in the <a href="https://nba.sanbi.org.za/content/terrestrial/ter_ets.html">(NBA 2025)</a>. Across the five functional biomes assessed, resilience trajectories vary considerably, reflecting differential vulnerability to environmental pressures.</p>
-<p>T2: Temperate–boreal forests and woodlands stands apart as the only biome maintaining consistently high resilience, with an RLIe score of 1.0 across all four assessment periods. All four ecosystems within this functional biome remained classified as Least Concern throughout the timeframe, indicating no detectable deterioration. Importantly, this stability does not signify an absence of pressures—rather, it indicates that existing threats have not yet intensified to thresholds sufficient to trigger higher threat categories.</p>
-<p>By comparison, T5: Deserts and semi-deserts and T1: Tropical–subtropical forests show modest but measurable RLIe declines. These decreases reflect gradual escalation of ecosystem risk rather than abrupt shifts into higher threat categories, suggesting a pattern of incremental degradation that warrants continued monitoring.</p>
-<p>Most concerning is MT2: Supralittoral coastal systems, which exhibits the steepest RLIe decline among all functional biomes assessed. This pronounced trajectory indicates not only comparatively higher baseline vulnerability but also accelerating risk over the assessment period, positioning coastal interface ecosystems as a priority for targeted conservation intervention.</p>
-</section>
-<section id="global-ecosystem-typology-at-level-3" class="level2">
-<h2 class="anchored" data-anchor-id="global-ecosystem-typology-at-level-3">Global Ecosystem Typology at Level 3</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-mermaid" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="Findings_files/figure-html/fig-2-1.png" class="img-fluid figure-img" width="960">
+<div aria-describedby="fig-mermaid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-mermaid">%%{init: {'theme': 'base', 'themeVariables': {'fontSize':'12px','primaryColor': '#f0fff0'}}}%%
+
+flowchart TB
+
+  A[(Ecosystem type.shp)] --&gt; B(Polygon to\n raster tool)
+  B --&gt; C[(Ecosystem type.tif)]
+  C --&gt; D(Tabulate area tool)
+  E[(Habitat modification\n &amp;\n land cover.tif)] --&gt; D
+  D --&gt; F((Tabulate area.dbf)) 
+  
+style A fill:#ADD8E6
+style B fill:#E2F516
+style C fill:#9ACD32
+style D fill:#E2F516
+style E fill:#ADD8E6
+style F fill:#9ACD32
+
+</pre>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<strong>Figure</strong>&nbsp;2<strong>:</strong> Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 3 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 3 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 3 categories.
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mermaid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<strong>Figure</strong>&nbsp;2<strong>:</strong> Workflow generated to estimate the proportion of ecosystem type in each of the Habitat Modification land cover change classes.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>At IUCN GET Level 3, ecosystem functional groups exhibit diverse resilience trajectories that reveal both encouraging stability and emerging vulnerabilities across the assessment period. Three of the eleven functional groups (T2.4 Warm temperate laurophyll forests, T3.1 Seasonally dry tropical shrublands, and T5.1 Semi-desert steppes) maintained an RLIe score of 1.0 across all assessment periods, indicating minimal detectable impacts from anthropogenic land-use pressures. This stability suggests either effective protection or lower baseline exposure to habitat loss and degradation drivers.</p>
-<p>Declining ecosystems followed distinct temporal patterns and this is demonstrated through MT2.1 Coastal shrublands and grasslands which experienced the most dramatic deterioration, with RLIe dropping sharply to 0.6 between 2014 and 2018 before stabilizing at this reduced level. Conversely, T3.2 Seasonally dry temperate heaths and shrublands had already declined prior to 2014 and maintained this degraded state (RLIe = 0.6) throughout subsequent assessment periodss, suggesting persistent rather than accelerating pressures.</p>
-<p>Aggregated trends confirm a broader erosion of ecosystem resilience. The overall RLIe across all functional groups declined from 0.82 in 2014 to 0.79 in 2024, signaling a gradual but consistent increase in ecosystem threat levels nationally. These contrasting trajectories underscore a critical management imperative: ecosystem resilience cannot be addressed through uniform interventions. Instead, conservation strategies must be tailored to the specific drivers and temporal dynamics shaping risk within each functional group, with particular attention to coastal systems experiencing acute, ongoing deterioration.</p>
-</section>
-<section id="red-list-of-ecosystem-at-the-global-ecosystem-typology-by-realm" class="level2">
-<h2 class="anchored" data-anchor-id="red-list-of-ecosystem-at-the-global-ecosystem-typology-by-realm">Red List of Ecosystem at the Global Ecosystem Typology by realm</h2>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Findings_files/figure-html/barplots-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption>IUCN GET Level 2 functional biomes occur in each Realm, by RLE 2025 (A), and (B) IUCN GET Level 3 functional groups occur in each realm</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>When summarized at the realm level, more than 70% of IUCN Global Ecosystem Typology (GET) Level 2 and Level 3 functional biomes within river, wetland, and estuarine realms are classified as threatened. At GET Level 2, inland aquatic realms, including estuarine systems, exhibit the highest proportion of threatened functional biomes (75%). At the functional group level, freshwater realms show the highest concentration of threatened functional groups, with river and wetland functional groups accounting for 75% and 72% of threatened classifications, respectively, followed by estuarine functional groups (71%). These patterns reflect the generally poor ecological condition of riverine, wetland, and estuarine functional biomes, which are subject to multiple compounding pressures. Chief among these are increasing disruption of hydrological regimes and declining water quality, with fishing pressure representing an additional stressor in estuarine systems.</p>
-<p>In contrast, a relatively large proportion of marine and terrestrial functional groups are classified as Least Concern. This is partly attributable to comparatively lower overall pressures in some functional biomes, as well as limitations in available data on pressures affecting utilized functional biomes.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

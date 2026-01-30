@@ -1,0 +1,77 @@
+---
+title: "Mermaid"
+---
+
+```{mermaid}
+%%| label: fig-mermaidGET
+%%| fig-align: center
+%%| fig-cap: |
+%%|   Workflow generated to estimate the proportion of ecosystem type in each of the Habitat Modification land cover change classes.
+%%{init: {'theme': 'base', 'themeVariables': {'fontSize':'12px','primaryColor': '#f0fff0'}}}%%
+
+flowchart TB
+
+  A[Realms in South Africa] --> B1(Terrestrial)
+  A --> B2(River)
+  A --> B3(Wetlands)
+  A --> B4(Estuarine)
+  A --> B5(Marine)
+  B1 --> C1[MT2]
+  B1 --> C2[T1] 
+  B1 --> C3[T2] 
+  B1 --> C4[Functional biomes]  
+  B1 --> C4[T3] 
+  B1 --> C5[T4]   
+  B1 --> C6[T5]
+  
+  B2 --> D1[F1] 
+  
+  B3 --> E1[F2]
+  B3 --> E2[TF1] 
+  
+  B4 --> F1[FM1] 
+  
+  B5 --> H1[M1]
+  B5 --> H2[M2] 
+  B5 --> H3[TM1]  
+  
+  
+  C1 & C2 & C3 & C4 & C5 & C6 --> GROUP["⎱ All Terrestrial ⎰"]
+  
+  GROUP --> I1[MT2.1]
+  GROUP --> I2[T1.2]  
+  GROUP --> I3[T2.4]
+  GROUP --> I4[T3.1]
+  GROUP --> I5[T3.2]
+  GROUP --> I6[T4.1]  
+  GROUP --> I7[T4.2]
+  
+  
+
+
+```
+
+```{mermaid}
+%%| label: fig-mermaid
+%%| fig-align: center
+%%| fig-cap: |
+%%|   Workflow generated to estimate the proportion of ecosystem type in each of the Habitat Modification land cover change classes.
+%%{init: {'theme': 'base', 'themeVariables': {'fontSize':'12px','primaryColor': '#f0fff0'}}}%%
+
+flowchart TB
+
+  A[(Ecosystem type.shp)] --> B(Polygon to\n raster tool)
+  B --> C[(Ecosystem type.tif)]
+  C --> D(Tabulate area tool)
+  E[(Habitat modification\n &\n land cover.tif)] --> D
+  D --> F((Tabulate area.dbf)) 
+  
+style A fill:#ADD8E6
+style B fill:#E2F516
+style C fill:#9ACD32
+style D fill:#E2F516
+style E fill:#ADD8E6
+style F fill:#9ACD32
+
+```
+
