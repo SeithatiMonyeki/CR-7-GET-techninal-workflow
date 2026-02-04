@@ -105,10 +105,10 @@ EDD <- read.csv("data/EDDFullfile_L4L5_V4_17092025s.csv")  %>%
                                      IUCN_GET_2022_L3 == "MT1.4" ~ "Boulder and cobble shores",
                                      IUCN_GET_2022_L3 == "MT2.1" ~ "Coastal shrublands and grasslands",
                                      TRUE ~ "")) %>%      
-       select(Realm_GETL1, Code, EcosystemType_GETLevel5_6, RLE_2025, EPL_2025, IUCN_GET_2025_L2, IUCN_GET_2022_L3, GET_L2.text, GET_L3.text) 
+       select(Realm_GETL1, Code, `Biome..GET.L3._Ecosystem_Fuctional_Groups..GET.Level.3.`, EcosystemType_GETLevel5_6, RLE_2025, EPL_2025, IUCN_GET_2025_L2, IUCN_GET_2022_L3, GET_L2.text, GET_L3.text) 
 
 write.csv(EDD, here("data", "EDD_GET levels names.csv"))
-  
+ 
 RLE <- readxl::read_excel("data/multiple RLE assessments.xlsx") %>%
        select("MapCode",
               "Year.2014",

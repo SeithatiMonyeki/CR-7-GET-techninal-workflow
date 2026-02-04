@@ -15,12 +15,13 @@ date-format: DD-MM-YYYY
 library(nbaR)
 library(dplyr)
 library(tidyr)
-#library(stringi)
 library(rlang)
 library(gt)
 library(ggplot2)
 library(RColorBrewer)
 library(here)
+library(scales)
+library(stringr)
 
 ```
 
@@ -30,11 +31,12 @@ RLIe_GET_L2 <- readxl::read_xlsx("./data/RLIe_GET_L2.xlsx")
 RLIe_GET_L3 <- readxl::read_xlsx("./data/RLIe_GET_L3.xlsx")
 RLIe_national <- readxl::read_xlsx("./data/RLIe_national.xlsx")
 
-GET_L2.count <- readxl::read_xlsx("./data/GET_L2.count.xlsx")
-GET_L3.count <- readxl::read_xlsx("./data/GET_L3.count.xlsx")
+GET_L2.RLE <- readxl::read_xlsx("./data/GET_L2.RLE.xlsx") %>%
+              mutate(GET_L2.count = factor(GET_L2.count, levels = unique(GET_L2.count)))
 
-GET_L2.ecosytems_count <- readxl::read_xlsx("./data/GET_L2.ecosytems_count.xlsx")
-GET_L3.ecosytems_count <- readxl::read_xlsx("./data/GET_L3.ecosytems_count.xlsx")
+GET_L3.RLE <- readxl::read_xlsx("./data/GET_L3.RLE.xlsx") %>%
+              mutate(GET_L3.count = factor(GET_L3.count, levels = unique(GET_L3.count)))
+
 ```
 
 ## Background
@@ -50,7 +52,7 @@ The Red List Index of Ecosystems (RLIe) was calculated at both IUCN Global Ecosy
 
 ## Global Ecosystem Typology at Level 2
 
-```{r getL2_plot, echo=FALSE, fig.width=9, fig.height=4.5}
+```{r, echo=FALSE, fig.width=9, fig.height=4.5}
 #| label: fig-1
 #| fig-cap: "Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 2 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 2 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 2 categories."
 
@@ -123,7 +125,7 @@ Most concerning is MT2: Supralittoral coastal systems, which exhibits the steepe
 ## Global Ecosystem Typology at Level 3
 
 
-```{r getL3_plot, echo=FALSE, fig.width=10, fig.height=4.5}
+```{r, echo=FALSE, fig.width=10, fig.height=4.5}
 #| label: fig-2
 #| fig-cap: "Red List Index of Ecosystems (RLIe) assessed at IUCN Global Ecosystem Typology (GET) Level 3 for South Africa. Changes in the slope of each line indicate the rate at which ecosystem functional groups within each GET Level 3 category are becoming more threatened over time. Lower RLIe values indicate movement towards ecosystem collapse (an RLIe value of 0 indicates complete ecosystem collapse). The aggregate line represents the national mean RLIe across all assessed GET Level 3 categories."
 #| 
@@ -186,7 +188,7 @@ ggsave(filename = "GET_L3.plot.png",
        dpi = 300)
 ```
 
-At IUCN GET Level 3, ecosystem functional groups exhibit diverse resilience trajectories that reveal both encouraging stability and emerging vulnerabilities across the assessment period. Three of the eleven functional groups (T2.4 Warm temperate laurophyll forests, T3.1 Seasonally dry tropical shrublands, and T5.1 Semi-desert steppes) maintained an RLIe score of 1.0 across all assessment periods, indicating minimal detectable impacts from anthropogenic land-use pressures. This stability suggests either effective protection or lower baseline exposure to degradation drivers.
+At IUCN GET Level 3, ecosystem functional groups exhibit diverse resilience trajectories that reveal both encouraging stability and emerging vulnerabilities across the assessment period. Three of the eleven functional groups (T2.4 Warm temperate laurophyll forests, T3.1 Seasonally dry tropical shrublands, and T5.1 Semi-desert steppes) maintained an RLIe score of 1.0 across all assessment periods, indicating minimal detectable impacts from anthropogenic land-use pressures. This stability suggests either effective protection or lower baseline exposure to drivers of change.
 
 Declining ecosystems followed distinct temporal patterns and this is demonstrated through MT2.1 Coastal shrublands and grasslands which experienced the most dramatic deterioration, with RLIe dropping sharply to 0.6 between 2014 and 2018 before stabilizing at this reduced level. Conversely, T3.2 Seasonally dry temperate heaths and shrublands had already declined prior to 2014 and maintained this degraded state (RLIe = 0.6) throughout subsequent assessment periodss, suggesting persistent rather than accelerating pressures.
 
@@ -194,13 +196,7 @@ Aggregated trends confirm a broader erosion of ecosystem resilience. The overall
 These contrasting trajectories underscore a critical management imperative: ecosystem resilience cannot be addressed through uniform interventions. Instead, conservation strategies must be tailored to the specific drivers and temporal dynamics shaping risk within each functional group, with particular attention to coastal systems experiencing acute, ongoing deterioration.
 
 ## Red List of Ecosystem at the Global Ecosystem Typology by realm
-
-```{r Function, echo=FALSE}
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(scales)
-library(stringr)
+```{r function, echo=FALSE}
 
 plot_rle_bar_wide <- function(data,
                               group_var,
@@ -212,7 +208,14 @@ plot_rle_bar_wide <- function(data,
                               label_size = 2,
                               wrap_width = 25,
                               bar_width = 0.7) {
-
+  # ---- Required libraries ----
+  library(dplyr)
+  library(tidyr)
+  library(ggplot2)
+  library(scales)
+  library(stringr)
+  # ---- Define Red List of Ecosystems (RLE) categories ----
+  # These columns must exist in the input data
   rle_cols <- c(
     "Least Concern",
     "Near Threatened",
@@ -220,89 +223,113 @@ plot_rle_bar_wide <- function(data,
     "Endangered",
     "Critically Endangered"
   )
-
+  # ---- Reshape data to long format & prepare factors ----
   df_long <- data %>%
+    # Convert wide RLE columns into long format
     pivot_longer(
       cols = all_of(rle_cols),
       names_to  = "RLE",
       values_to = "Count"
     ) %>%
     mutate(
+      # Ensure RLE categories appear in the desired order
       RLE = factor(RLE, levels = rle_cols),
+      # Set factor levels for the grouping variable
+      # Special ordering applied when grouping variable is "Realm"
       {{ group_var }} := factor(
         {{ group_var }},
         levels = if (rlang::as_name(rlang::enquo(group_var)) == "Realm") {
-          c("Estuarine", "Marine","Wetland", "River","Terrestrial")
+          c("Estuarine", "Marine", "Wetland", "River", "Terrestrial")
         } else {
           levels_vec
         }
       )
     ) %>%
+    # ---- Calculate proportions within each group ----
     group_by({{ group_var }}) %>%
     mutate(prop = Count / sum(Count)) %>%
     ungroup()
-
+  # ---- Build stacked proportional bar plot ----
   p <- ggplot(df_long, aes(y = {{ group_var }}, x = prop, fill = RLE)) +
+    # Draw stacked bars scaled to 100%
     geom_bar(stat = "identity", position = "fill", width = bar_width) +
-    geom_text(aes(label = ifelse(Count == 0, "", Count)),
-              position = position_fill(vjust = 0.5),
-              size = label_size) +
-    scale_x_continuous(breaks = c(0, 0.5, 1),
-                       labels = scales::percent_format(accuracy = 1)) +
-    scale_fill_manual(values = c("#B4D79E", "#CCE226", "#FFD966", "#F6B26B", "#CC0000"),
-                      name = NULL) +
+    # Add count labels inside bar segments (omit zeros)
+    geom_text(
+      aes(label = ifelse(Count == 0, "", Count)),
+      position = position_fill(vjust = 0.5),
+      size = label_size
+    ) +
+    # Format x-axis as percentages
+    scale_x_continuous(
+      breaks = c(0, 0.5, 1),
+      labels = scales::percent_format(accuracy = 1)
+    ) +
+    # Manually set RLE colour palette
+    scale_fill_manual(
+      values = c("#B4D79E", "#CCE226", "#FFE800", "#FFAF42", "#CC0000"),
+      name = NULL,
+      guide = guide_legend(reverse = TRUE)
+    ) +
+    # Wrap long y-axis labels
     scale_y_discrete(labels = function(x) str_wrap(x, wrap_width)) +
+    # Axis labels and optional caption
     labs(
       x = "Percentage of ecosystem types",
       y = y_label,
       caption = caption
     ) +
+    # ---- Base theme styling ----
     theme_minimal(base_size = text_size) +
     theme(
+      # Remove horizontal grid lines for cleaner bars
       panel.grid.major.y = element_blank(),
       panel.grid.minor.y = element_blank(),
+      # Keep subtle vertical grid lines
       panel.grid.minor.x = element_blank(),
       panel.grid.major.x = element_line(color = "grey80", size = 0.04),
+      # Axis title sizing
       axis.title.x = element_text(size = 6),
       axis.title.y = element_text(size = 6),
+      # Legend sizing (applies if legend is shown)
       legend.title = element_blank(),
       legend.key.height = unit(0.35, "cm"),
       legend.key.width  = unit(0.35, "cm")
     )
-
-  if (!show_legend) {
+  # ---- Legend control ----
+  # Show legend at bottom or remove entirely
+  if (show_legend) {
+    p <- p + theme(
+      legend.position = "bottom",
+      legend.direction = "horizontal",
+      legend.box = "horizontal"
+    )
+  } else {
     p <- p + theme(legend.position = "none")
   }
-
+  # ---- Return ggplot object ----
   return(p)
 }
 
 ```
 
-
-```{r barplots, echo=FALSE}
-#| fig.height: 2
+```{r, echo=FALSE}
+#| label: fig-3
+#| fig.height: 5
 #| out.width: 100%
-#| fig-cap: "IUCN GET Level 2 functional biomes occur in each Realm, by RLE 2025 (A), and (B) IUCN GET Level 3 functional groups occur in each realm"
-GET_L2.realm <- plot_rle_bar_wide(GET_L2.count,
-                                  group_var  = Realm,
-                                  levels_vec = unique(GET_L2.ecosytems_count$Realm),
-                                  y_label    = "Realm",
-                                   bar_width  = 0.5)
-
-GET_L3.realm <- plot_rle_bar_wide(GET_L3.count,
-                                  group_var  = Realm,
-                                  levels_vec = unique(GET_L3.ecosytems_count$Realm),
-                                  y_label    = "Realm",
-                                   bar_width  = 0.5)
-
-
-# ---- Arrange plots side by side with common legend ----
-ggpubr::ggarrange(GET_L2.realm, GET_L3.realm, ncol = 2, labels = c("A", "B"),
-  font.label = list(size = 6), common.legend = TRUE, legend = "bottom")
+#| fig-cap: "Number of ecosystem assigned to the IUCN Global Ecosystem Typology Level 2 functional biomes per threat status"
+ 
+GET_L2 <- plot_rle_bar_wide(GET_L2.RLE,
+                            group_var  = GET_L2.count,
+                            levels_vec = rev(levels(GET_L2.RLE$GET_L2.count)),
+                            y_label    = "IUCN Global Ecosystem Typology Level 2",
+                            bar_width  = 0.5)
+GET_L2
 
 ```
 
-When summarized at the realm level, freshwater ecosystems are disproportionately threatened across both IUCN GET classification levels. At GET Level 2 (functional biomes), 75% of inland aquatic realms including rivers and wetlands, as well as estuarine systems are classified as threatened. At GET Level 3 (ecosystem functional groups), freshwater realms show the highest concentration of threats: river groups account for 75% and wetlands 72% of threatened classifications, while estuarine groups account for 71%. These convergent patterns reflect widespread degradation of freshwater and transitional ecosystems under multiple pressures, including hydrological disruption (damming, water extraction, altered flows), declining water quality (pollution and eutrophication), and, in estuaries, intensive fishing pressure.
 
-In contrast, marine and terrestrial functional groups show substantially higher proportions of Least Concern classifications at both GET levels. However, this disparity warrants cautious interpretation. The pattern reflects both genuinely lower pressure intensities in some remote or less-utilized systems and data deficiencies in threat assessment for exploited ecosystems, suggesting that threat status for certain marine and terrestrial functional units may be underestimated.
+Here, we examine responses of South Africa’s ecosystems aggregated at IUCN Global Ecosystem Typology (GET) Level 2 to multiple, often synergistic pressures, as reflected by their threat status. @fig-3 shows that Aquatic and transitional ecosystems are more threatened than other fucntional biomes. In particular, Lakes (F2) and semi-confined transitional waters (FM1) each comprising 22 ecosystem types exhibit the highest threat levels, with 91% of ecosystems classified as either Critically Endangered, Endangered or Vulnerable. While both biomes show equivalent threat proportions, lake ecosystems have the highest proprotion of ecosystems that are on a verge of collapse (i.e. Critically Endangered). Additionally, rivers and streams (F1) and palustrine wetlands (TF1) demonstrate high vulnerability to drivers of change, with over 60% of their ecosystems classified as threatened. These aquatic and transitional systems experience severe cumulative pressures including pollution from multiple sources, land-use change, biological invasions, and climate change. Their ecological functioning is particularly sensitive to hydrological alterations and water quality degradation.
+
+Terrestrial and deep marine ecosystems show greater resilience compared to ecosystems in other functional biomes. specifically, temperate-boreal forests and woodlands (T2), deserts and semi-deserts (T5), and deep sea floors (M3) exhibit substantially lower threat levels at 0%, 11%, and 10% respectively. Despite low proportions of ecosystems classified as threatened, drivers of change for terrestrial ecosystems are primarily anthropogenic, driven by habitat loss from intensive land use activities (agriculture, urban development, infrastructure, mining, commercial forestry, and dam construction), invasive alien species, rangeland degradation, pollution, unsustainable resource extraction, and climate change. Marine ecosystems face distinct pressures dominated by industrial fishing, with additional impacts from mining, petroleum extraction, altered freshwater flows, port and harbour development, shipping activities, and climate change.
+
+These pressures interact and operate in complex ways that result in the alteration of ecosystem structure, function and composition, and the disruption of ecological processes. Am improved and up to date ecosystem pressure map at finer spatial resolution are essential in improving ecosystem-focused assessments which are the corner-stone for supporting evidence-based conservation planning and effective ecosystem management.
