@@ -196,7 +196,8 @@ Aggregated trends confirm a broader erosion of ecosystem resilience. The overall
 These contrasting trajectories underscore a critical management imperative: ecosystem resilience cannot be addressed through uniform interventions. Instead, conservation strategies must be tailored to the specific drivers and temporal dynamics shaping risk within each functional group, with particular attention to coastal systems experiencing acute, ongoing deterioration.
 
 ## Red List of Ecosystem at the Global Ecosystem Typology by realm
-```{r function, echo=FALSE}
+
+```{r Function, echo=FALSE}
 
 plot_rle_bar_wide <- function(data,
                               group_var,
@@ -205,17 +206,16 @@ plot_rle_bar_wide <- function(data,
                               show_legend = TRUE,
                               caption = NULL,
                               text_size = 8,
-                              label_size = 2,
-                              wrap_width = 25,
+                              label_size = 2.3,
                               bar_width = 0.7) {
+
   # ---- Required libraries ----
   library(dplyr)
   library(tidyr)
   library(ggplot2)
   library(scales)
-  library(stringr)
+
   # ---- Define Red List of Ecosystems (RLE) categories ----
-  # These columns must exist in the input data
   rle_cols <- c(
     "Least Concern",
     "Near Threatened",
@@ -223,19 +223,16 @@ plot_rle_bar_wide <- function(data,
     "Endangered",
     "Critically Endangered"
   )
+
   # ---- Reshape data to long format & prepare factors ----
   df_long <- data %>%
-    # Convert wide RLE columns into long format
     pivot_longer(
       cols = all_of(rle_cols),
       names_to  = "RLE",
       values_to = "Count"
     ) %>%
     mutate(
-      # Ensure RLE categories appear in the desired order
       RLE = factor(RLE, levels = rle_cols),
-      # Set factor levels for the grouping variable
-      # Special ordering applied when grouping variable is "Realm"
       {{ group_var }} := factor(
         {{ group_var }},
         levels = if (rlang::as_name(rlang::enquo(group_var)) == "Realm") {
@@ -245,58 +242,52 @@ plot_rle_bar_wide <- function(data,
         }
       )
     ) %>%
-    # ---- Calculate proportions within each group ----
     group_by({{ group_var }}) %>%
     mutate(prop = Count / sum(Count)) %>%
     ungroup()
+
   # ---- Build stacked proportional bar plot ----
   p <- ggplot(df_long, aes(y = {{ group_var }}, x = prop, fill = RLE)) +
-    # Draw stacked bars scaled to 100%
     geom_bar(stat = "identity", position = "fill", width = bar_width) +
-    # Add count labels inside bar segments (omit zeros)
     geom_text(
       aes(label = ifelse(Count == 0, "", Count)),
       position = position_fill(vjust = 0.5),
       size = label_size
     ) +
-    # Format x-axis as percentages
     scale_x_continuous(
       breaks = c(0, 0.5, 1),
       labels = scales::percent_format(accuracy = 1)
     ) +
-    # Manually set RLE colour palette
     scale_fill_manual(
       values = c("#B4D79E", "#CCE226", "#FFE800", "#FFAF42", "#CC0000"),
       name = NULL,
       guide = guide_legend(reverse = TRUE)
     ) +
-    # Wrap long y-axis labels
-    scale_y_discrete(labels = function(x) str_wrap(x, wrap_width)) +
-    # Axis labels and optional caption
+
+    # ---- Y-axis labels without any wrapping ----
+    scale_y_discrete(labels = function(x) x) +
+
     labs(
       x = "Percentage of ecosystem types",
       y = y_label,
       caption = caption
     ) +
-    # ---- Base theme styling ----
+
     theme_minimal(base_size = text_size) +
     theme(
-      # Remove horizontal grid lines for cleaner bars
       panel.grid.major.y = element_blank(),
       panel.grid.minor.y = element_blank(),
-      # Keep subtle vertical grid lines
       panel.grid.minor.x = element_blank(),
       panel.grid.major.x = element_line(color = "grey80", size = 0.04),
-      # Axis title sizing
-      axis.title.x = element_text(size = 6),
-      axis.title.y = element_text(size = 6),
-      # Legend sizing (applies if legend is shown)
+      axis.title.x = element_text(size = 8),
+      axis.title.y = element_text(size = 8),
+      axis.text.y  = element_text(lineheight = 0.95),
       legend.title = element_blank(),
-      legend.key.height = unit(0.35, "cm"),
+      legend.key.height = unit(0.4, "cm"),
       legend.key.width  = unit(0.35, "cm")
     )
+
   # ---- Legend control ----
-  # Show legend at bottom or remove entirely
   if (show_legend) {
     p <- p + theme(
       legend.position = "bottom",
@@ -306,15 +297,18 @@ plot_rle_bar_wide <- function(data,
   } else {
     p <- p + theme(legend.position = "none")
   }
-  # ---- Return ggplot object ----
+
   return(p)
 }
 
+
 ```
+
+
 
 ```{r, echo=FALSE}
 #| label: fig-3
-#| fig.height: 5
+#| fig.height: 4
 #| out.width: 100%
 #| fig-cap: "Number of ecosystem assigned to the IUCN Global Ecosystem Typology Level 2 functional biomes per threat status"
  
@@ -325,11 +319,19 @@ GET_L2 <- plot_rle_bar_wide(GET_L2.RLE,
                             bar_width  = 0.5)
 GET_L2
 
+
+#ggsave(filename = "GET_L2_barplot.png",
+#       plot = GET_L2,
+#       path = "./images",
+#       width = 16,
+#       height = 8,
+#       dpi = 300)
+
 ```
 
 
-Here, we examine responses of South Africa’s ecosystems aggregated at IUCN Global Ecosystem Typology (GET) Level 2 to multiple, often synergistic pressures, as reflected by their threat status. @fig-3 shows that Aquatic and transitional ecosystems are more threatened than other fucntional biomes. In particular, Lakes (F2) and semi-confined transitional waters (FM1) each comprising 22 ecosystem types exhibit the highest threat levels, with 91% of ecosystems classified as either Critically Endangered, Endangered or Vulnerable. While both biomes show equivalent threat proportions, lake ecosystems have the highest proprotion of ecosystems that are on a verge of collapse (i.e. Critically Endangered). Additionally, rivers and streams (F1) and palustrine wetlands (TF1) demonstrate high vulnerability to drivers of change, with over 60% of their ecosystems classified as threatened. These aquatic and transitional systems experience severe cumulative pressures including pollution from multiple sources, land-use change, biological invasions, and climate change. Their ecological functioning is particularly sensitive to hydrological alterations and water quality degradation.
+Here, we examine the responses of South Africa’s ecosystems aggregated at IUCN Global Ecosystem Typology (GET) Level 2 to multiple, often synergistic pressures, as reflected by their threat status. @fig-3 shows that Aquatic and transitional ecosystems are more threatened than other functional biomes. In particular, Lakes (F2) and semi-confined transitional waters (FM1) each comprising 22 ecosystem types exhibit the highest threat levels, with 91% of ecosystems classified as either Critically Endangered, Endangered or Vulnerable. While both of these functional biomes show equivalent threat proportions, lake ecosystems have the highest proportion of ecosystems that are on a verge of collapse (i.e. Critically Endangered). Additionally, rivers and streams (F1) and palustrine wetlands (TF1) demonstrate high vulnerability to drivers of change, with over 60% of their ecosystems classified as threatened. The vulnerability of these aquatic and transitional systems experience arises from cumulative pressures including pollution from multiple sources, land-use change, biological invasions, and climate change. Their ecological functioning is particularly sensitive to hydrological alterations and water quality degradation.
 
-Terrestrial and deep marine ecosystems show greater resilience compared to ecosystems in other functional biomes. specifically, temperate-boreal forests and woodlands (T2), deserts and semi-deserts (T5), and deep sea floors (M3) exhibit substantially lower threat levels at 0%, 11%, and 10% respectively. Despite low proportions of ecosystems classified as threatened, drivers of change for terrestrial ecosystems are primarily anthropogenic, driven by habitat loss from intensive land use activities (agriculture, urban development, infrastructure, mining, commercial forestry, and dam construction), invasive alien species, rangeland degradation, pollution, unsustainable resource extraction, and climate change. Marine ecosystems face distinct pressures dominated by industrial fishing, with additional impacts from mining, petroleum extraction, altered freshwater flows, port and harbour development, shipping activities, and climate change.
+Terrestrial and deep marine ecosystems show greater resilience compared to ecosystems in other functional biomes. specifically, temperate-boreal forests and woodlands (T2), deserts and semi-deserts (T5), and deep sea floors (M3) exhibit substantially lower threat levels at 0%, 11%, and 10% respectively. Despite very low proportions of ecosystems classified as threatened, drivers of change for terrestrial ecosystems are primarily anthropogenic, driven by habitat loss from intensive land use activities (agriculture, urban development, infrastructure, mining, commercial forestry, and dam construction), invasive alien species, rangeland degradation, pollution, unsustainable resource extraction, and climate change. Marine ecosystems face distinct pressures dominated by industrial fishing, with additional impacts from mining, petroleum extraction, altered freshwater flows, port and harbour development, shipping activities, and climate change.
 
-These pressures interact and operate in complex ways that result in the alteration of ecosystem structure, function and composition, and the disruption of ecological processes. Am improved and up to date ecosystem pressure map at finer spatial resolution are essential in improving ecosystem-focused assessments which are the corner-stone for supporting evidence-based conservation planning and effective ecosystem management.
+These pressures interact and operate in complex ways that result in the alteration of ecosystem structure, function and composition, and the disruption of ecological processes. An improved and up to date finer-scale ecosystem pressure maps are essential in improving ecosystem-focused assessments which are the corner-stone for supporting evidence-based conservation planning and effective ecosystem management.

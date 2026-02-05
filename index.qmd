@@ -7,11 +7,11 @@ about:
   image: images/GET.jpg
   links:
     - icon: github
-      href: https://github.com/NBA2025
+      href: https://github.com/SeithatiMonyeki/CR-7-GET-techninal-workflow
     - icon: youtube
       href: https://www.youtube.com/watch?v=K0XvdAFjCGU
     - icon: save
-      href: "https://bgis.sanbi.org/Projects/Detail/1233/"
+      href: "https://nba.sanbi.org.za/contents.html"
     - icon: globe
       href: https://biodiversityadvisor.sanbi.org/contentmanagement/index?guid=e7c11960-bb9b-4bac-a736-6c6db0e01b42
     - icon: envelope
