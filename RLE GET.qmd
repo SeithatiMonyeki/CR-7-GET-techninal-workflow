@@ -112,7 +112,7 @@ purrr::iwalk(files, ~ writexl::write_xlsx(.x, paste0("./data/", .y, ".xlsx")))
 
 
 
-```{r function, echo=FALSE}
+```{r Function, echo=FALSE}
 
 plot_rle_bar_wide <- function(data,
                               group_var,
@@ -121,17 +121,16 @@ plot_rle_bar_wide <- function(data,
                               show_legend = TRUE,
                               caption = NULL,
                               text_size = 8,
-                              label_size = 2,
-                              wrap_width = 25,
+                              label_size = 2.3,
                               bar_width = 0.7) {
+
   # ---- Required libraries ----
   library(dplyr)
   library(tidyr)
   library(ggplot2)
   library(scales)
-  library(stringr)
+
   # ---- Define Red List of Ecosystems (RLE) categories ----
-  # These columns must exist in the input data
   rle_cols <- c(
     "Least Concern",
     "Near Threatened",
@@ -139,19 +138,16 @@ plot_rle_bar_wide <- function(data,
     "Endangered",
     "Critically Endangered"
   )
+
   # ---- Reshape data to long format & prepare factors ----
   df_long <- data %>%
-    # Convert wide RLE columns into long format
     pivot_longer(
       cols = all_of(rle_cols),
       names_to  = "RLE",
       values_to = "Count"
     ) %>%
     mutate(
-      # Ensure RLE categories appear in the desired order
       RLE = factor(RLE, levels = rle_cols),
-      # Set factor levels for the grouping variable
-      # Special ordering applied when grouping variable is "Realm"
       {{ group_var }} := factor(
         {{ group_var }},
         levels = if (rlang::as_name(rlang::enquo(group_var)) == "Realm") {
@@ -161,58 +157,52 @@ plot_rle_bar_wide <- function(data,
         }
       )
     ) %>%
-    # ---- Calculate proportions within each group ----
     group_by({{ group_var }}) %>%
     mutate(prop = Count / sum(Count)) %>%
     ungroup()
+
   # ---- Build stacked proportional bar plot ----
   p <- ggplot(df_long, aes(y = {{ group_var }}, x = prop, fill = RLE)) +
-    # Draw stacked bars scaled to 100%
     geom_bar(stat = "identity", position = "fill", width = bar_width) +
-    # Add count labels inside bar segments (omit zeros)
     geom_text(
       aes(label = ifelse(Count == 0, "", Count)),
       position = position_fill(vjust = 0.5),
       size = label_size
     ) +
-    # Format x-axis as percentages
     scale_x_continuous(
       breaks = c(0, 0.5, 1),
       labels = scales::percent_format(accuracy = 1)
     ) +
-    # Manually set RLE colour palette
     scale_fill_manual(
       values = c("#B4D79E", "#CCE226", "#FFE800", "#FFAF42", "#CC0000"),
       name = NULL,
       guide = guide_legend(reverse = TRUE)
     ) +
-    # Wrap long y-axis labels
-    scale_y_discrete(labels = function(x) str_wrap(x, wrap_width)) +
-    # Axis labels and optional caption
+
+    # ---- Y-axis labels without any wrapping ----
+    scale_y_discrete(labels = function(x) x) +
+
     labs(
       x = "Percentage of ecosystem types",
       y = y_label,
       caption = caption
     ) +
-    # ---- Base theme styling ----
+
     theme_minimal(base_size = text_size) +
     theme(
-      # Remove horizontal grid lines for cleaner bars
       panel.grid.major.y = element_blank(),
       panel.grid.minor.y = element_blank(),
-      # Keep subtle vertical grid lines
       panel.grid.minor.x = element_blank(),
       panel.grid.major.x = element_line(color = "grey80", size = 0.04),
-      # Axis title sizing
-      axis.title.x = element_text(size = 6),
-      axis.title.y = element_text(size = 6),
-      # Legend sizing (applies if legend is shown)
+      axis.title.x = element_text(size = 8),
+      axis.title.y = element_text(size = 8),
+      axis.text.y  = element_text(lineheight = 0.95),
       legend.title = element_blank(),
-      legend.key.height = unit(0.35, "cm"),
+      legend.key.height = unit(0.4, "cm"),
       legend.key.width  = unit(0.35, "cm")
     )
+
   # ---- Legend control ----
-  # Show legend at bottom or remove entirely
   if (show_legend) {
     p <- p + theme(
       legend.position = "bottom",
@@ -222,23 +212,36 @@ plot_rle_bar_wide <- function(data,
   } else {
     p <- p + theme(legend.position = "none")
   }
-  # ---- Return ggplot object ----
+
   return(p)
 }
+
 
 ```
 
 ## 
 
-::: scrolling
+
 ```{r}
- 
+#| label: fig-3
+#| fig.height: 4
+#| out.width: 100% 
+
 GET_L2 <- plot_rle_bar_wide(GET_L2.RLE,
                             group_var  = GET_L2.count,
                             levels_vec = rev(levels(GET_L2.RLE$GET_L2.count)),
                             y_label    = "IUCN Global Ecosystem Typology Level 2",
                             bar_width  = 0.5)
 GET_L2
+
+
+```
+
+
+```{r}
+#| label: fig-4
+#| fig.height: 8
+#| out.width: 100% 
 
 GET_L3 <- plot_rle_bar_wide(GET_L3.RLE,
                             group_var  = GET_L3.count,
@@ -248,5 +251,3 @@ GET_L3 <- plot_rle_bar_wide(GET_L3.RLE,
 GET_L3
 
 ```
-:::
-

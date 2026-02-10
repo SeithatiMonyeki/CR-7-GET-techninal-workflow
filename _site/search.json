@@ -109,6 +109,6 @@
     "href": "RLE GET.html#section",
     "title": "7th Country Reporting",
     "section": "",
-    "text": "GET_L2 &lt;- plot_rle_bar_wide(GET_L2.RLE,\n                            group_var  = GET_L2.count,\n                            levels_vec = rev(levels(GET_L2.RLE$GET_L2.count)),\n                            y_label    = \"IUCN Global Ecosystem Typology Level 2\",\n                            bar_width  = 0.5)\nGET_L2\n\n\n\n\n\n\n\nGET_L3 &lt;- plot_rle_bar_wide(GET_L3.RLE,\n                            group_var  = GET_L3.count,\n                            levels_vec = rev(levels(GET_L3.RLE$GET_L3.count)),\n                            y_label    = \"IUCN Global Ecosystem Typology Level 3\",\n                            bar_width  = 0.5)\nGET_L3"
+    "text": "GET_L2 &lt;- plot_rle_bar_wide(GET_L2.RLE,\n                            group_var  = GET_L2.count,\n                            levels_vec = rev(levels(GET_L2.RLE$GET_L2.count)),\n                            y_label    = \"IUCN Global Ecosystem Typology Level 2\",\n                            bar_width  = 0.5)\nGET_L2\n\n\n\n\n\n\n\n\n\n\n\n\n\nGET_L3 &lt;- plot_rle_bar_wide(GET_L3.RLE,\n                            group_var  = GET_L3.count,\n                            levels_vec = rev(levels(GET_L3.RLE$GET_L3.count)),\n                            y_label    = \"IUCN Global Ecosystem Typology Level 3\",\n                            bar_width  = 0.5)\nGET_L3"
   }
 ]
