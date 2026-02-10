@@ -9,9 +9,9 @@ website:
       - text: Home
         href: index.qmd
       - text: RLIe indicator       
-        href: RLIe GET.qmd      
+        href: RLIe_GET.qmd      
       - text: RLE indicator       
-        href: RLE GET.qmd        
+        href: RLE_GET.qmd        
       - text: Summary Findings      
         href: Findings.qmd  
 
