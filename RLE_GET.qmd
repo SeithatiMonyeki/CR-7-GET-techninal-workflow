@@ -110,8 +110,6 @@ purrr::iwalk(files, ~ writexl::write_xlsx(.x, paste0("./data/", .y, ".xlsx")))
 ```
 :::
 
-
-
 ```{r Function, echo=FALSE}
 
 plot_rle_bar_wide <- function(data,
@@ -221,7 +219,6 @@ plot_rle_bar_wide <- function(data,
 
 ## 
 
-
 ```{r}
 #| label: fig-3
 #| fig.height: 4
@@ -236,7 +233,6 @@ GET_L2
 
 
 ```
-
 
 ```{r}
 #| label: fig-4

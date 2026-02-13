@@ -12,7 +12,6 @@ date-format: DD-MM-YYYY
 #| warning: false
 
 
-library(nbaR)
 library(dplyr)
 library(tidyr)
 library(rlang)

@@ -17,7 +17,7 @@ date-format: DD-MM-YYYY
 
 #devtools::install_github("SANBI-NBA/nbaR", force = T)
 
-library(nbaR)
+
 library(dplyr)
 library(tidyr)
 #library(stringi)
