@@ -4,7 +4,7 @@ sidebar: false
 about: 
   id: hero-heading
   template: trestles
-  image: images/GET.jpg
+  image: Images/GET.jpg
   links:
     - icon: github
       href: https://github.com/SeithatiMonyeki/CR-7-GET-techninal-workflow
